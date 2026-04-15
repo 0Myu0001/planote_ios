@@ -15,6 +15,8 @@ struct ReviewView: View {
     @State private var reviewState: ReviewState = .loading
     @State private var items: [ScheduleItem] = []
     @State private var noteId: String = ""
+    @State private var candidates: [ExtractionCandidate] = []
+    @State private var calendarResultMessage: String?
     @Environment(\.colorScheme) var colorScheme
 
     private var selectedCount: Int {
@@ -39,6 +41,26 @@ struct ReviewView: View {
                 }
             }
         }
+        .overlay(alignment: .top) {
+            if let message = calendarResultMessage {
+                Text(message)
+                    .font(.system(size: 14, weight: .semibold))
+                    .foregroundStyle(.white)
+                    .padding(.horizontal, 20)
+                    .padding(.vertical, 12)
+                    .background {
+                        Capsule()
+                            .fill(
+                                message.contains("許可されていません")
+                                ? Color(hex: 0xFF3B30)
+                                : Color(hex: 0x34C759)
+                            )
+                    }
+                    .padding(.top, 60)
+                    .transition(.move(edge: .top).combined(with: .opacity))
+            }
+        }
+        .animation(.spring(response: 0.4), value: calendarResultMessage)
         .task {
             await processImage()
         }
@@ -275,6 +297,7 @@ struct ReviewView: View {
 
             self.noteId = noteId
             self.items = scheduleItems
+            self.candidates = candidates
             self.reviewState = .loaded(noteId: noteId, items: scheduleItems)
         } catch {
             self.reviewState = .error(error.localizedDescription)
@@ -288,7 +311,32 @@ struct ReviewView: View {
             return
         }
 
+        let selectedCandidates = candidates.filter { selectedIds.contains($0.candidate_id) }
+
         Task {
+            // Write to device calendar
+            let granted = await CalendarService.shared.requestAccess()
+            if granted {
+                var successCount = 0
+                for candidate in selectedCandidates {
+                    let ok = await CalendarService.shared.addEvent(from: candidate)
+                    if ok { successCount += 1 }
+                }
+                let total = selectedCandidates.count
+                await MainActor.run {
+                    if successCount == total {
+                        calendarResultMessage = "\(successCount)件の予定をカレンダーに追加しました"
+                    } else {
+                        calendarResultMessage = "\(total)件中\(successCount)件をカレンダーに追加しました"
+                    }
+                }
+            } else {
+                await MainActor.run {
+                    calendarResultMessage = "カレンダーへのアクセスが許可されていません"
+                }
+            }
+
+            // Confirm via API
             do {
                 _ = try await PlanoteAPIClient.shared.confirmCandidates(
                     noteId: noteId,
@@ -297,6 +345,8 @@ struct ReviewView: View {
             } catch {
                 print("Confirm error: \(error.localizedDescription)")
             }
+
+            try? await Task.sleep(nanoseconds: 1_500_000_000)
             await MainActor.run {
                 onAdd()
             }

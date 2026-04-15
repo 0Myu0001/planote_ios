@@ -7,12 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		188BB691B496EC9D0DE7D495 /* CalendarService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53400360A2B288AE7121E137 /* CalendarService.swift */; };
 		18B68921319D2AD89748C74B /* PlanoteApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 877377DE8FCE5D9A85636378 /* PlanoteApp.swift */; };
+		3D2D3905529A87AAB60BD6CA /* PlanoteAPIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECEC3F583D26E5B92EBC2B9D /* PlanoteAPIClient.swift */; };
 		3DDAED37C9D02822DD442687 /* ScheduleItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92E7736F66CD281DBBD3DD6F /* ScheduleItem.swift */; };
 		5283149131FF794D4629741B /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 306507351E5D168AD91C0DC1 /* HomeView.swift */; };
+		60D826C3D9A3DC96EC1099B5 /* APIModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = C813DE015DA19DD21DC2C6D8 /* APIModels.swift */; };
 		98AC763D7621BF0BDC3189AF /* ScanView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BB5655E8B60BB8C7EC1DA0F /* ScanView.swift */; };
-		A1B2C3D4E5F60718A9B0C1D2 /* APIModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D4E5F60718A9B0C1D3 /* APIModels.swift */; };
-		A1B2C3D4E5F60718A9B0C1D4 /* PlanoteAPIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D4E5F60718A9B0C1D5 /* PlanoteAPIClient.swift */; };
 		B1E33C0E5686E27E8C9141C9 /* Components.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E340AD323ADFDAF3816F19E /* Components.swift */; };
 		D677B13EC0DDB63A4F6CD8AD /* ReviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 953CE4F021178A076180CAD6 /* ReviewView.swift */; };
 		DCB5E7EEF574D8C592F1B29D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A4505414263CA76E374362A4 /* Assets.xcassets */; };
@@ -25,16 +26,17 @@
 		306507351E5D168AD91C0DC1 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		3E340AD323ADFDAF3816F19E /* Components.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Components.swift; sourceTree = "<group>"; };
 		426DE661D8374CBB90445835 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		53400360A2B288AE7121E137 /* CalendarService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarService.swift; sourceTree = "<group>"; };
 		877377DE8FCE5D9A85636378 /* PlanoteApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanoteApp.swift; sourceTree = "<group>"; };
 		8A8AFB4BDDB9EFDC92A11EC4 /* PlanoteTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanoteTheme.swift; sourceTree = "<group>"; };
 		8BB5655E8B60BB8C7EC1DA0F /* ScanView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScanView.swift; sourceTree = "<group>"; };
 		92E7736F66CD281DBBD3DD6F /* ScheduleItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleItem.swift; sourceTree = "<group>"; };
 		953CE4F021178A076180CAD6 /* ReviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewView.swift; sourceTree = "<group>"; };
-		A1B2C3D4E5F60718A9B0C1D3 /* APIModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIModels.swift; sourceTree = "<group>"; };
-		A1B2C3D4E5F60718A9B0C1D5 /* PlanoteAPIClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanoteAPIClient.swift; sourceTree = "<group>"; };
 		A4505414263CA76E374362A4 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		B4CA4AE02D1FD7480B7DD4B7 /* Planote.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Planote.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		B4CA4AE02D1FD7480B7DD4B7 /* Planote.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = Planote.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		C813DE015DA19DD21DC2C6D8 /* APIModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIModels.swift; sourceTree = "<group>"; };
 		CA7298EEC2CB1ED5575A05D3 /* CalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarView.swift; sourceTree = "<group>"; };
+		ECEC3F583D26E5B92EBC2B9D /* PlanoteAPIClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanoteAPIClient.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXGroup section */
@@ -57,18 +59,10 @@
 		66AA1CB1EF794D1A36CB5761 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				A1B2C3D4E5F60718A9B0C1D3 /* APIModels.swift */,
+				C813DE015DA19DD21DC2C6D8 /* APIModels.swift */,
 				92E7736F66CD281DBBD3DD6F /* ScheduleItem.swift */,
 			);
 			path = Models;
-			sourceTree = "<group>";
-		};
-		A1B2C3D4E5F60718A9B0C1D6 /* Services */ = {
-			isa = PBXGroup;
-			children = (
-				A1B2C3D4E5F60718A9B0C1D5 /* PlanoteAPIClient.swift */,
-			);
-			path = Services;
 			sourceTree = "<group>";
 		};
 		6EED11B22A0A2AE5D05EFF57 /* Products */ = {
@@ -79,6 +73,15 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		73D5B2B78E5477E30481FF62 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				53400360A2B288AE7121E137 /* CalendarService.swift */,
+				ECEC3F583D26E5B92EBC2B9D /* PlanoteAPIClient.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
 		79B7762A0B5F859D6B223D41 /* Planote */ = {
 			isa = PBXGroup;
 			children = (
@@ -86,7 +89,7 @@
 				B0B0B89824F3CC59CC9453E5 /* App */,
 				F57CDBA1C1907C339A5A6676 /* Components */,
 				66AA1CB1EF794D1A36CB5761 /* Models */,
-				A1B2C3D4E5F60718A9B0C1D6 /* Services */,
+				73D5B2B78E5477E30481FF62 /* Services */,
 				5AEAA81BCF5814AF86170B6A /* Theme */,
 				A252005F2821E1778B2CA0B3 /* Views */,
 			);
@@ -149,7 +152,9 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = YES;
-				LastUpgradeCheck = 2640;
+				LastUpgradeCheck = 1600;
+				TargetAttributes = {
+				};
 			};
 			buildConfigurationList = A119CE99D17D944933A5D975 /* Build configuration list for PBXProject "Planote" */;
 			developmentRegion = en;
@@ -186,12 +191,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A1B2C3D4E5F60718A9B0C1D2 /* APIModels.swift in Sources */,
+				60D826C3D9A3DC96EC1099B5 /* APIModels.swift in Sources */,
+				188BB691B496EC9D0DE7D495 /* CalendarService.swift in Sources */,
 				E808734AB5D47B99BC726F46 /* CalendarView.swift in Sources */,
 				B1E33C0E5686E27E8C9141C9 /* Components.swift in Sources */,
 				FFFB4DE5F848830BDE4F7577 /* ContentView.swift in Sources */,
 				5283149131FF794D4629741B /* HomeView.swift in Sources */,
-				A1B2C3D4E5F60718A9B0C1D4 /* PlanoteAPIClient.swift in Sources */,
+				3D2D3905529A87AAB60BD6CA /* PlanoteAPIClient.swift in Sources */,
 				18B68921319D2AD89748C74B /* PlanoteApp.swift in Sources */,
 				E8ED51B4C40BF5B19EF0EA37 /* PlanoteTheme.swift in Sources */,
 				D677B13EC0DDB63A4F6CD8AD /* ReviewView.swift in Sources */,
@@ -208,18 +214,12 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Planote/Preview Content\"";
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = Planote;
-				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
-				INFOPLIST_KEY_NSCameraUsageDescription = "予定の写真を撮影するためにカメラを使用します";
-				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_NSCalendarsFullAccessUsageDescription = "手書きメモから抽出した予定をカレンダーに追加するために使用します";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -266,10 +266,8 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEVELOPMENT_TEAM = 8D3QB4UCUR;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -285,7 +283,6 @@
 				MTL_FAST_MATH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
-				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				SWIFT_VERSION = 5.9;
@@ -298,18 +295,12 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Planote/Preview Content\"";
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = Planote;
-				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
-				INFOPLIST_KEY_NSCameraUsageDescription = "予定の写真を撮影するためにカメラを使用します";
-				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_NSCalendarsFullAccessUsageDescription = "手書きメモから抽出した予定をカレンダーに追加するために使用します";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -356,10 +347,8 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
-				DEVELOPMENT_TEAM = 8D3QB4UCUR;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
-				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -382,7 +371,6 @@
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
-				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.9;
