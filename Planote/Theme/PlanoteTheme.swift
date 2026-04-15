@@ -98,7 +98,7 @@ struct PlanoteBackground: View {
 
 // MARK: - Glass Effect Modifier
 
-struct GlassBackground: ViewModifier {
+struct GlassBackgroundLegacy: ViewModifier {
     var strong: Bool = false
     @Environment(\.colorScheme) var colorScheme
 
@@ -119,7 +119,6 @@ struct GlassBackground: ViewModifier {
                             )
                     )
                     .overlay(alignment: .top) {
-                        // Top highlight for glass refraction
                         Capsule()
                             .fill(
                                 LinearGradient(
@@ -138,17 +137,10 @@ struct GlassBackground: ViewModifier {
 
 extension View {
     func glassBackground(strong: Bool = false) -> some View {
-        modifier(GlassBackground(strong: strong))
+        if #available(iOS 26.0, *) {
+            return self.glassEffect(.regular)
+        } else {
+            return self.modifier(GlassBackgroundLegacy(strong: strong))
+        }
     }
 }
-
-// MARK: - iOS 26 Liquid Glass Note
-//
-// When building with the iOS 26 SDK (Xcode 17+), replace `.glassBackground()`
-// with the native SwiftUI modifier:
-//
-//   .glassEffect(.regular)             // standard glass
-//   .glassEffect(.regular.interactive) // interactive glass
-//
-// And use `.containerRelativeFrame()` with `.glassEffectContainer()`
-// to group glass elements for the merging/blending behavior.

@@ -1,9 +1,17 @@
 import SwiftUI
+import PhotosUI
+import UIKit
 
 struct ScanView: View {
     let onBack: () -> Void
-    let onScanned: () -> Void
-    @State private var scanLineOffset: CGFloat = 0
+    let onScanned: (UIImage) -> Void
+
+    @State private var showActionSheet = false
+    @State private var showCamera = false
+    @State private var showPhotoPicker = false
+    @State private var showFilePicker = false
+    @State private var selectedPhotoItem: PhotosPickerItem? = nil
+
     @Environment(\.colorScheme) var colorScheme
 
     var body: some View {
@@ -13,54 +21,27 @@ struct ScanView: View {
 
             Spacer()
 
-            // Viewfinder
-            ZStack {
-                // Glass background frame
-                RoundedRectangle(cornerRadius: 22, style: .continuous)
-                    .fill(.ultraThinMaterial)
-                    .overlay(
-                        RoundedRectangle(cornerRadius: 22, style: .continuous)
-                            .fill(Color.glassBg)
-                    )
-                    .overlay(
-                        RoundedRectangle(cornerRadius: 22, style: .continuous)
-                            .stroke(Color.glassBorder, lineWidth: 1)
-                    )
-                    .frame(width: 280, height: 380)
+            // Instructions
+            VStack(alignment: .leading, spacing: 20) {
+                VStack(alignment: .leading, spacing: 6) {
+                    Text("撮影する準備ができましたか？")
+                        .font(.system(size: 16, weight: .bold))
+                        .foregroundStyle(Color.textPrimary)
+                    Text("下のボタンをタップして「カメラで撮影」を選択してください。")
+                        .font(.system(size: 14))
+                        .foregroundStyle(Color.textSecondary)
+                }
 
-                // Corner markers
-                ViewfinderCorners()
-                    .frame(width: 280, height: 380)
-
-                // Scan line
-                Rectangle()
-                    .fill(
-                        LinearGradient(
-                            colors: [.clear, Color.blueLight, .clear],
-                            startPoint: .leading,
-                            endPoint: .trailing
-                        )
-                    )
-                    .frame(width: 248, height: 2)
-                    .shadow(color: Color.bluePrimary.opacity(0.5), radius: 10)
-                    .shadow(color: Color.bluePrimary.opacity(0.3), radius: 30)
-                    .offset(y: scanLineOffset)
-
-                // Placeholder content
-                VStack(spacing: 12) {
-                    Image(systemName: "camera.badge.ellipsis")
-                        .font(.system(size: 40))
-                        .foregroundStyle(Color.textSecondary.opacity(0.5))
-                    Text("手書きメモを撮影してください")
+                VStack(alignment: .leading, spacing: 6) {
+                    Text("すでに写真やスクリーンショット、PDFがありますか？")
+                        .font(.system(size: 16, weight: .bold))
+                        .foregroundStyle(Color.textPrimary)
+                    Text("下のボタンをタップして「写真を選択」もしくは「ファイルを選択」を選択して、予定が書かれている写真を選択してください。")
                         .font(.system(size: 14))
                         .foregroundStyle(Color.textSecondary)
                 }
             }
-            .onAppear {
-                withAnimation(.easeInOut(duration: 2.5).repeatForever(autoreverses: true)) {
-                    scanLineOffset = 160
-                }
-            }
+            .padding(.horizontal, 32)
 
             Spacer()
 
@@ -69,7 +50,7 @@ struct ScanView: View {
                 Button(action: {
                     let impactFeedback = UIImpactFeedbackGenerator(style: .medium)
                     impactFeedback.impactOccurred()
-                    onScanned()
+                    showActionSheet = true
                 }) {
                     ZStack {
                         // Outer ring
@@ -109,13 +90,120 @@ struct ScanView: View {
                 }
                 .buttonStyle(ShutterButtonStyle())
 
-                Text("タップして撮影 / ギャラリーから選択")
+                Text("タップして写真を選択")
                     .font(.system(size: 13))
                     .foregroundStyle(Color.textTertiary)
             }
             .padding(.bottom, 40)
         }
-        .padding(.bottom, 60) // Space for tab bar
+        .padding(.bottom, 16)
+        .confirmationDialog("写真を追加", isPresented: $showActionSheet, titleVisibility: .visible) {
+            Button("カメラで撮影") {
+                showCamera = true
+            }
+            Button("写真を選択") {
+                showPhotoPicker = true
+            }
+            Button("ファイルを選択") {
+                showFilePicker = true
+            }
+            Button("キャンセル", role: .cancel) {}
+        }
+        .fullScreenCover(isPresented: $showCamera) {
+            CameraPicker { image in
+                showCamera = false
+                onScanned(image)
+            } onCancel: {
+                showCamera = false
+            }
+            .ignoresSafeArea()
+        }
+        .photosPicker(isPresented: $showPhotoPicker, selection: $selectedPhotoItem, matching: .images)
+        .onChange(of: selectedPhotoItem) {
+            guard let item = selectedPhotoItem else { return }
+            selectedPhotoItem = nil
+            Task {
+                if let data = try? await item.loadTransferable(type: Data.self),
+                   let image = UIImage(data: data) {
+                    onScanned(image)
+                }
+            }
+        }
+        .sheet(isPresented: $showFilePicker) {
+            DocumentPicker { url in
+                loadImageFromURL(url)
+            }
+        }
+    }
+
+    private func loadImageFromURL(_ url: URL) {
+        guard url.startAccessingSecurityScopedResource() else { return }
+        defer { url.stopAccessingSecurityScopedResource() }
+
+        if let data = try? Data(contentsOf: url),
+           let image = UIImage(data: data) {
+            onScanned(image)
+        }
+    }
+}
+
+// MARK: - Camera Picker (UIImagePickerController)
+
+struct CameraPicker: UIViewControllerRepresentable {
+    let onImagePicked: (UIImage) -> Void
+    let onCancel: () -> Void
+
+    func makeUIViewController(context: Context) -> UIImagePickerController {
+        let picker = UIImagePickerController()
+        picker.sourceType = .camera
+        picker.delegate = context.coordinator
+        return picker
+    }
+
+    func updateUIViewController(_ uiViewController: UIImagePickerController, context: Context) {}
+
+    func makeCoordinator() -> Coordinator { Coordinator(self) }
+
+    class Coordinator: NSObject, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+        let parent: CameraPicker
+        init(_ parent: CameraPicker) { self.parent = parent }
+
+        func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
+            if let image = info[.originalImage] as? UIImage {
+                parent.onImagePicked(image)
+            }
+        }
+
+        func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+            parent.onCancel()
+        }
+    }
+}
+
+// MARK: - Document Picker
+
+struct DocumentPicker: UIViewControllerRepresentable {
+    let onDocumentPicked: (URL) -> Void
+
+    func makeUIViewController(context: Context) -> UIDocumentPickerViewController {
+        let picker = UIDocumentPickerViewController(forOpeningContentTypes: [.image, .pdf])
+        picker.delegate = context.coordinator
+        return picker
+    }
+
+    func updateUIViewController(_ uiViewController: UIDocumentPickerViewController, context: Context) {}
+
+    func makeCoordinator() -> Coordinator { Coordinator(self) }
+
+    class Coordinator: NSObject, UIDocumentPickerDelegate {
+        let parent: DocumentPicker
+        init(_ parent: DocumentPicker) { self.parent = parent }
+
+        func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentsAt urls: [URL]) {
+            if let url = urls.first {
+                parent.onDocumentPicked(url)
+            }
+        }
     }
 }
 
@@ -188,6 +276,6 @@ struct NavBar: View {
 #Preview {
     ZStack {
         PlanoteBackground()
-        ScanView(onBack: {}, onScanned: {})
+        ScanView(onBack: {}, onScanned: { _ in })
     }
 }

@@ -4,9 +4,10 @@ import SwiftUI
 
 struct ScheduleCard: View {
     let item: ScheduleItem
+    var showGlass: Bool = true
 
     var body: some View {
-        HStack(spacing: 14) {
+        let content = HStack(spacing: 14) {
             // Time badge
             VStack(spacing: 2) {
                 Text(item.time)
@@ -39,7 +40,12 @@ struct ScheduleCard: View {
         }
         .padding(.horizontal, 18)
         .padding(.vertical, 16)
-        .glassBackground()
+
+        if showGlass {
+            content.glassBackground()
+        } else {
+            content
+        }
     }
 }
 
@@ -151,26 +157,19 @@ struct QuickActionButton: View {
     var body: some View {
         Button(action: action) {
             VStack(spacing: 10) {
-                ZStack {
-                    Circle()
-                        .fill(
-                            isPrimary
-                            ? LinearGradient(colors: [.bluePrimary, .blueDeep], startPoint: .topLeading, endPoint: .bottomTrailing)
-                            : LinearGradient(colors: [Color.bluePrimary.opacity(0.15), Color.bluePrimary.opacity(0.1)], startPoint: .topLeading, endPoint: .bottomTrailing)
-                        )
-                        .frame(width: 44, height: 44)
-                        .overlay(
-                            Circle().stroke(
-                                isPrimary ? Color.white.opacity(0.2) : Color.bluePrimary.opacity(0.25),
-                                lineWidth: 1
+                Image(systemName: icon)
+                    .font(.system(size: 18, weight: .medium))
+                    .foregroundStyle(isPrimary ? .white : Color.bluePrimary)
+                    .frame(width: 44, height: 44)
+                    .background {
+                        Circle()
+                            .fill(
+                                isPrimary
+                                ? LinearGradient(colors: [.bluePrimary, .blueDeep], startPoint: .topLeading, endPoint: .bottomTrailing)
+                                : LinearGradient(colors: [Color.bluePrimary.opacity(0.15), Color.bluePrimary.opacity(0.1)], startPoint: .topLeading, endPoint: .bottomTrailing)
                             )
-                        )
-                        .shadow(color: isPrimary ? Color.bluePrimary.opacity(0.4) : .clear, radius: 10)
-
-                    Image(systemName: icon)
-                        .font(.system(size: 18, weight: .medium))
-                        .foregroundStyle(isPrimary ? .white : Color.bluePrimary)
-                }
+                            .shadow(color: isPrimary ? Color.bluePrimary.opacity(0.4) : .clear, radius: 10)
+                    }
 
                 Text(title)
                     .font(.system(size: 13, weight: .medium))
@@ -205,6 +204,63 @@ struct SectionHeader: View {
                 }
             }
         }
+    }
+}
+
+// MARK: - Today Schedule Card
+
+struct TodayScheduleCard: View {
+    let items: [ScheduleItem]
+    @Binding var isExpanded: Bool
+
+    var body: some View {
+        VStack(spacing: 0) {
+            // Header (tappable)
+            Button {
+                withAnimation(.spring(response: 0.35, dampingFraction: 0.8)) {
+                    isExpanded.toggle()
+                }
+            } label: {
+                HStack(spacing: 16) {
+                    Text("\(items.count)")
+                        .font(.system(size: 36, weight: .bold, design: .rounded))
+                        .foregroundStyle(
+                            LinearGradient(colors: [Color.textPrimary, .blueLight], startPoint: .topLeading, endPoint: .bottomTrailing)
+                        )
+
+                    VStack(alignment: .leading, spacing: 2) {
+                        Text("今日の予定")
+                            .font(.system(size: 14, weight: .semibold))
+                            .foregroundStyle(Color.textPrimary)
+                        Text("タップして詳細を表示")
+                            .font(.system(size: 14))
+                            .foregroundStyle(Color.textSecondary)
+                    }
+
+                    Spacer()
+
+                    Image(systemName: "chevron.down")
+                        .font(.system(size: 14, weight: .semibold))
+                        .foregroundStyle(Color.textTertiary)
+                        .rotationEffect(.degrees(isExpanded ? 0 : -90))
+                }
+                .padding(18)
+            }
+            .buttonStyle(.plain)
+
+            // Expandable schedule list
+            if isExpanded {
+                VStack(spacing: 10) {
+                    ForEach(items) { item in
+                        ScheduleCard(item: item, showGlass: false)
+                    }
+                }
+                .padding(.horizontal, 12)
+                .padding(.bottom, 14)
+                .transition(.opacity.combined(with: .move(edge: .top)))
+            }
+        }
+        .glassBackground()
     }
 }
 

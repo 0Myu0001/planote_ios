@@ -4,6 +4,8 @@ struct HomeView: View {
     let onScan: () -> Void
     let onCalendar: () -> Void
 
+    @State private var isTodayExpanded = true
+
     var body: some View {
         ScrollView(.vertical, showsIndicators: false) {
             VStack(alignment: .leading, spacing: 0) {
@@ -24,7 +26,7 @@ struct HomeView: View {
                             )
                         )
 
-                    Text("今日の予定は3件です")
+                    Text("今日の予定は\(ScheduleItem.sampleToday.count)件です")
                         .font(.system(size: 14))
                         .foregroundStyle(Color.textSecondary)
                 }
@@ -42,24 +44,19 @@ struct HomeView: View {
                 .padding(.bottom, 24)
 
                 // Today's Schedule
-                SectionHeader(title: "今日の予定", trailing: "すべて表示")
-                    .padding(.horizontal, 20)
-                    .padding(.bottom, 14)
-
-                VStack(spacing: 10) {
-                    ForEach(ScheduleItem.sampleToday) { item in
-                        ScheduleCard(item: item)
-                    }
-                }
+                TodayScheduleCard(
+                    items: ScheduleItem.sampleToday,
+                    isExpanded: $isTodayExpanded
+                )
                 .padding(.horizontal, 20)
 
                 // Week Stat
                 WeekStatCard(count: 12)
                     .padding(.horizontal, 20)
-                    .padding(.top, 24)
+                    .padding(.top, 14)
                     .padding(.bottom, 20)
             }
-            .padding(.bottom, 110) // Space for tab bar
+            .padding(.bottom, 16)
         }
     }
 }

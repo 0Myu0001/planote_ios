@@ -1,9 +1,20 @@
 import SwiftUI
 
+// MARK: - Review State
+
+enum ReviewState {
+    case loading
+    case loaded(noteId: String, items: [ScheduleItem])
+    case error(String)
+}
+
 struct ReviewView: View {
+    let scannedImage: UIImage?
     let onBack: () -> Void
     let onAdd: () -> Void
-    @State private var items: [ScheduleItem] = ScheduleItem.sampleToday
+    @State private var reviewState: ReviewState = .loading
+    @State private var items: [ScheduleItem] = []
+    @State private var noteId: String = ""
     @Environment(\.colorScheme) var colorScheme
 
     private var selectedCount: Int {
@@ -18,32 +29,74 @@ struct ReviewView: View {
                 // Nav Bar
                 NavBar(title: "確認", onBack: onBack)
 
-                ScrollView(.vertical, showsIndicators: false) {
-                    VStack(spacing: 0) {
-                        // Image preview
+                switch reviewState {
+                case .loading:
+                    loadingView
+                case .loaded:
+                    loadedView
+                case .error(let message):
+                    errorView(message: message)
+                }
+            }
+        }
+        .task {
+            await processImage()
+        }
+    }
+
+    // MARK: - Loading View
+
+    private var loadingView: some View {
+        VStack(spacing: 20) {
+            Spacer()
+
+            // Show scanned image thumbnail
+            if let image = scannedImage {
+                Image(uiImage: image)
+                    .resizable()
+                    .scaledToFit()
+                    .frame(maxHeight: 200)
+                    .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 16, style: .continuous)
+                            .stroke(Color.glassBorder, lineWidth: 1)
+                    )
+                    .padding(.horizontal, 40)
+            }
+
+            ProgressView()
+                .controlSize(.large)
+                .tint(.bluePrimary)
+
+            Text("画像を解析中...")
+                .font(.system(size: 16, weight: .medium))
+                .foregroundStyle(Color.textSecondary)
+
+            Text("手書きメモからスケジュールを抽出しています")
+                .font(.system(size: 13))
+                .foregroundStyle(Color.textTertiary)
+
+            Spacer()
+        }
+    }
+
+    // MARK: - Loaded View
+
+    private var loadedView: some View {
+        VStack(spacing: 0) {
+            ScrollView(.vertical, showsIndicators: false) {
+                VStack(spacing: 0) {
+                    // Image preview
+                    if let image = scannedImage {
                         ZStack {
-                            RoundedRectangle(cornerRadius: 22, style: .continuous)
-                                .fill(.ultraThinMaterial)
-                                .overlay(
-                                    RoundedRectangle(cornerRadius: 22, style: .continuous)
-                                        .fill(Color.glassBg)
-                                )
+                            Image(uiImage: image)
+                                .resizable()
+                                .scaledToFit()
+                                .clipShape(RoundedRectangle(cornerRadius: 22, style: .continuous))
                                 .overlay(
                                     RoundedRectangle(cornerRadius: 22, style: .continuous)
                                         .stroke(Color.glassBorder, lineWidth: 1)
                                 )
-
-                            // Mock handwriting
-                            VStack(spacing: 4) {
-                                Text("4/5 10:00 チームMTG 会議室A")
-                                Text("4/5 13:30 ランチ 田中さん 駅前カフェ")
-                                Text("4/8 17:00 歯医者 佐藤歯科")
-                            }
-                            .font(.system(size: 14))
-                            .italic()
-                            .foregroundStyle(Color.textSecondary)
-                            .multilineTextAlignment(.center)
-                            .lineSpacing(6)
 
                             // Badge
                             VStack {
@@ -67,15 +120,28 @@ struct ReviewView: View {
                             }
                             .padding(12)
                         }
-                        .frame(height: 180)
+                        .frame(maxHeight: 220)
                         .padding(.horizontal, 20)
                         .padding(.bottom, 20)
+                    }
 
-                        // Section header
-                        SectionHeader(title: "抽出された予定", trailing: "\(selectedCount)件選択中")
-                            .padding(.horizontal, 20)
-                            .padding(.bottom, 14)
+                    // Section header
+                    SectionHeader(title: "抽出された予定", trailing: "\(selectedCount)件選択中")
+                        .padding(.horizontal, 20)
+                        .padding(.bottom, 14)
 
+                    if items.isEmpty {
+                        VStack(spacing: 12) {
+                            Image(systemName: "doc.text.magnifyingglass")
+                                .font(.system(size: 40))
+                                .foregroundStyle(Color.textTertiary)
+                            Text("予定が見つかりませんでした")
+                                .font(.system(size: 15))
+                                .foregroundStyle(Color.textSecondary)
+                        }
+                        .frame(maxWidth: .infinity)
+                        .padding(.vertical, 40)
+                    } else {
                         // Extracted items
                         VStack(spacing: 10) {
                             ForEach(items.indices, id: \.self) { index in
@@ -94,50 +160,150 @@ struct ReviewView: View {
                         .padding(.bottom, 20)
                     }
                 }
+            }
 
-                // Action buttons
-                HStack(spacing: 12) {
-                    Button(action: onBack) {
-                        Text("再スキャン")
-                            .font(.system(size: 15, weight: .semibold))
-                            .foregroundStyle(Color.textPrimary)
-                            .frame(maxWidth: .infinity)
-                            .padding(.vertical, 16)
-                            .background {
-                                Capsule()
-                                    .fill(.ultraThinMaterial)
-                                    .overlay(Capsule().fill(Color.glassBg))
-                                    .overlay(Capsule().stroke(Color.glassBorder, lineWidth: 1))
-                            }
-                    }
-
-                    Button(action: onAdd) {
-                        Text("カレンダーに追加")
-                            .font(.system(size: 15, weight: .semibold))
-                            .foregroundStyle(.white)
-                            .frame(maxWidth: .infinity)
-                            .padding(.vertical, 16)
-                            .background {
-                                Capsule()
-                                    .fill(
-                                        LinearGradient(
-                                            colors: [.bluePrimary, .blueDeep],
-                                            startPoint: .topLeading,
-                                            endPoint: .bottomTrailing
-                                        )
-                                    )
-                                    .shadow(color: Color.bluePrimary.opacity(0.4), radius: 12, y: 4)
-                            }
-                    }
+            // Action buttons
+            HStack(spacing: 12) {
+                Button(action: onBack) {
+                    Text("再スキャン")
+                        .font(.system(size: 15, weight: .semibold))
+                        .foregroundStyle(Color.textPrimary)
+                        .frame(maxWidth: .infinity)
+                        .padding(.vertical, 16)
+                        .background {
+                            Capsule()
+                                .fill(.ultraThinMaterial)
+                                .overlay(Capsule().fill(Color.glassBg))
+                                .overlay(Capsule().stroke(Color.glassBorder, lineWidth: 1))
+                        }
                 }
-                .buttonStyle(.plain)
-                .padding(.horizontal, 20)
-                .padding(.vertical, 20)
+
+                Button(action: {
+                    confirmSelectedCandidates()
+                }) {
+                    Text("カレンダーに追加")
+                        .font(.system(size: 15, weight: .semibold))
+                        .foregroundStyle(.white)
+                        .frame(maxWidth: .infinity)
+                        .padding(.vertical, 16)
+                        .background {
+                            Capsule()
+                                .fill(
+                                    LinearGradient(
+                                        colors: [.bluePrimary, .blueDeep],
+                                        startPoint: .topLeading,
+                                        endPoint: .bottomTrailing
+                                    )
+                                )
+                                .shadow(color: Color.bluePrimary.opacity(0.4), radius: 12, y: 4)
+                        }
+                }
+                .disabled(selectedCount == 0)
+                .opacity(selectedCount == 0 ? 0.5 : 1.0)
+            }
+            .buttonStyle(.plain)
+            .padding(.horizontal, 20)
+            .padding(.vertical, 20)
+        }
+    }
+
+    // MARK: - Error View
+
+    private func errorView(message: String) -> some View {
+        VStack(spacing: 20) {
+            Spacer()
+
+            Image(systemName: "exclamationmark.triangle")
+                .font(.system(size: 48))
+                .foregroundStyle(Color(hex: 0xFF3B30))
+
+            Text("エラーが発生しました")
+                .font(.system(size: 18, weight: .bold))
+                .foregroundStyle(Color.textPrimary)
+
+            Text(message)
+                .font(.system(size: 14))
+                .foregroundStyle(Color.textSecondary)
+                .multilineTextAlignment(.center)
+                .padding(.horizontal, 40)
+
+            Button(action: {
+                reviewState = .loading
+                Task { await processImage() }
+            }) {
+                Text("再試行")
+                    .font(.system(size: 15, weight: .semibold))
+                    .foregroundStyle(.white)
+                    .padding(.horizontal, 32)
+                    .padding(.vertical, 14)
+                    .background {
+                        Capsule()
+                            .fill(
+                                LinearGradient(
+                                    colors: [.bluePrimary, .blueDeep],
+                                    startPoint: .topLeading,
+                                    endPoint: .bottomTrailing
+                                )
+                            )
+                    }
+            }
+
+            Button(action: onBack) {
+                Text("戻る")
+                    .font(.system(size: 15, weight: .medium))
+                    .foregroundStyle(Color.blueLight)
+            }
+
+            Spacer()
+        }
+    }
+
+    // MARK: - API Calls
+
+    private func processImage() async {
+        guard let image = scannedImage else {
+            reviewState = .error("画像が選択されていません")
+            return
+        }
+
+        do {
+            let (noteId, candidates) = try await PlanoteAPIClient.shared.scanAndProcess(image: image)
+            let accents: [ScheduleAccent] = [.blue, .purple, .teal]
+            let scheduleItems = candidates.enumerated().map { index, candidate in
+                ScheduleItem(from: candidate, accent: accents[index % accents.count])
+            }
+
+            self.noteId = noteId
+            self.items = scheduleItems
+            self.reviewState = .loaded(noteId: noteId, items: scheduleItems)
+        } catch {
+            self.reviewState = .error(error.localizedDescription)
+        }
+    }
+
+    private func confirmSelectedCandidates() {
+        let selectedIds = items.filter(\.isSelected).compactMap(\.candidateId)
+        guard !selectedIds.isEmpty else {
+            onAdd()
+            return
+        }
+
+        Task {
+            do {
+                _ = try await PlanoteAPIClient.shared.confirmCandidates(
+                    noteId: noteId,
+                    candidateIds: selectedIds
+                )
+            } catch {
+                print("Confirm error: \(error.localizedDescription)")
+            }
+            await MainActor.run {
+                onAdd()
             }
         }
     }
 }
 
 #Preview {
-    ReviewView(onBack: {}, onAdd: {})
+    ReviewView(scannedImage: nil, onBack: {}, onAdd: {})
 }

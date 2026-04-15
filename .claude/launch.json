@@ -1,0 +1,27 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "Planote (iPhone 17 Pro - iOS 26.4)",
+      "runtimeExecutable": "xcodebuild",
+      "runtimeArgs": [
+        "-scheme", "Planote",
+        "-destination", "platform=iOS Simulator,name=iPhone 17 Pro,OS=26.4",
+        "-configuration", "Debug",
+        "build"
+      ],
+      "port": 0
+    },
+    {
+      "name": "Planote (iPhone 16 Pro - iOS 18.5)",
+      "runtimeExecutable": "xcodebuild",
+      "runtimeArgs": [
+        "-scheme", "Planote",
+        "-destination", "platform=iOS Simulator,name=iPhone 16 Pro,OS=18.5",
+        "-configuration", "Debug",
+        "build"
+      ],
+      "port": 0
+    }
+  ]
+}
