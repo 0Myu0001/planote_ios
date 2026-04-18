@@ -22,18 +22,24 @@ actor CalendarService {
 
         let tz = TimeZone(identifier: candidate.timezone ?? "Asia/Tokyo") ?? TimeZone(identifier: "Asia/Tokyo")!
 
-        var dateFmt = DateFormatter()
+        let dateFmt = DateFormatter()
         dateFmt.locale = Locale(identifier: "en_US_POSIX")
         dateFmt.timeZone = tz
 
         if let dateStr = candidate.date, let startStr = candidate.start_time {
-            dateFmt.dateFormat = "yyyy-MM-dd HH:mm"
-            guard let startDate = dateFmt.date(from: "\(dateStr) \(startStr)") else { return false }
+            // start_time は "HH:mm:ss" または "HH:mm" の両方に対応
+            let normalizedStart = normalizeTime(startStr)
+            dateFmt.dateFormat = "yyyy-MM-dd HH:mm:ss"
+            guard let startDate = dateFmt.date(from: "\(dateStr) \(normalizedStart)") else { return false }
             event.startDate = startDate
 
-            if let endStr = candidate.end_time,
-               let endDate = dateFmt.date(from: "\(dateStr) \(endStr)") {
-                event.endDate = endDate
+            if let endStr = candidate.end_time {
+                let normalizedEnd = normalizeTime(endStr)
+                if let endDate = dateFmt.date(from: "\(dateStr) \(normalizedEnd)") {
+                    event.endDate = endDate
+                } else {
+                    event.endDate = startDate.addingTimeInterval(3600)
+                }
             } else {
                 event.endDate = startDate.addingTimeInterval(3600)
             }
@@ -54,5 +60,14 @@ actor CalendarService {
             print("CalendarService save error: \(error.localizedDescription)")
             return false
         }
+    }
+
+    /// "HH:mm" → "HH:mm:00", "HH:mm:ss" → そのまま
+    private func normalizeTime(_ time: String) -> String {
+        let parts = time.split(separator: ":")
+        if parts.count == 2 {
+            return "\(time):00"
+        }
+        return time
     }
 }
