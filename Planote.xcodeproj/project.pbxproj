@@ -33,7 +33,7 @@
 		92E7736F66CD281DBBD3DD6F /* ScheduleItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleItem.swift; sourceTree = "<group>"; };
 		953CE4F021178A076180CAD6 /* ReviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewView.swift; sourceTree = "<group>"; };
 		A4505414263CA76E374362A4 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		B4CA4AE02D1FD7480B7DD4B7 /* Planote.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = Planote.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		B4CA4AE02D1FD7480B7DD4B7 /* Planote.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Planote.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C813DE015DA19DD21DC2C6D8 /* APIModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIModels.swift; sourceTree = "<group>"; };
 		CA7298EEC2CB1ED5575A05D3 /* CalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarView.swift; sourceTree = "<group>"; };
 		ECEC3F583D26E5B92EBC2B9D /* PlanoteAPIClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanoteAPIClient.swift; sourceTree = "<group>"; };
@@ -153,8 +153,6 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = YES;
 				LastUpgradeCheck = 1600;
-				TargetAttributes = {
-				};
 			};
 			buildConfigurationList = A119CE99D17D944933A5D975 /* Build configuration list for PBXProject "Planote" */;
 			developmentRegion = en;
@@ -220,6 +218,10 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = Planote;
 				INFOPLIST_KEY_NSCalendarsFullAccessUsageDescription = "手書きメモから抽出した予定をカレンダーに追加するために使用します";
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = UIInterfaceOrientationPortrait;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -298,9 +300,14 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Planote/Preview Content\"";
+				DEVELOPMENT_TEAM = 8D3QB4UCUR;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = Planote;
 				INFOPLIST_KEY_NSCalendarsFullAccessUsageDescription = "手書きメモから抽出した予定をカレンダーに追加するために使用します";
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = UIInterfaceOrientationPortrait;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

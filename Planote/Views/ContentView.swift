@@ -40,7 +40,9 @@ struct ContentView: View {
                     onBack: { selectedTab = .home },
                     onScanned: { image in
                         scannedImage = image
-                        isReviewPresented = true
+                        DispatchQueue.main.async {
+                            isReviewPresented = true
+                        }
                     }
                 )
                 .tabItem {
