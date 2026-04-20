@@ -218,6 +218,8 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = Planote;
 				INFOPLIST_KEY_NSCalendarsFullAccessUsageDescription = "手書きメモから抽出した予定をカレンダーに追加するために使用します";
+				INFOPLIST_KEY_NSCameraUsageDescription = "手書きメモを撮影してスケジュールを抽出するために使用します";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "手書きメモの写真を選択してスケジュールを抽出するために使用します";
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
@@ -304,6 +306,8 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = Planote;
 				INFOPLIST_KEY_NSCalendarsFullAccessUsageDescription = "手書きメモから抽出した予定をカレンダーに追加するために使用します";
+				INFOPLIST_KEY_NSCameraUsageDescription = "手書きメモを撮影してスケジュールを抽出するために使用します";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "手書きメモの写真を選択してスケジュールを抽出するために使用します";
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";

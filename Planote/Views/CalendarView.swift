@@ -9,26 +9,39 @@ struct CalendarView: View {
     @State private var visibleMonths: [MonthData] = []
     @State private var showEventList = false
     @State private var visibleMonthIDs: Set<String> = []
+    @State private var scrollToTodayTrigger = 0
 
     private static let calendar = Calendar.current
     private static let weekdays = ["日", "月", "火", "水", "木", "金", "土"]
 
+    private static var todayMonthID: String {
+        let comps = calendar.dateComponents([.year, .month], from: Date())
+        return "\(comps.year!)-\(comps.month!)"
+    }
+
     var body: some View {
         ZStack(alignment: .top) {
             // Full-screen scrollable calendar
-            ScrollView(.vertical, showsIndicators: false) {
-                LazyVStack(spacing: 0) {
-                    ForEach(visibleMonths) { month in
-                        MonthView(month: month)
-                            .id(month.id)
-                            .onAppear { visibleMonthIDs.insert(month.id) }
-                            .onDisappear { visibleMonthIDs.remove(month.id) }
+            ScrollViewReader { proxy in
+                ScrollView(.vertical, showsIndicators: false) {
+                    LazyVStack(spacing: 0) {
+                        ForEach(visibleMonths) { month in
+                            MonthView(month: month)
+                                .id(month.id)
+                                .onAppear { visibleMonthIDs.insert(month.id) }
+                                .onDisappear { visibleMonthIDs.remove(month.id) }
+                        }
+                    }
+                    .padding(.top, 60)
+                    .padding(.bottom, 100)
+                }
+                .task { await loadInitialMonths() }
+                .onChange(of: scrollToTodayTrigger) {
+                    withAnimation {
+                        proxy.scrollTo(Self.todayMonthID, anchor: .center)
                     }
                 }
-                .padding(.top, 60)
-                .padding(.bottom, 100)
             }
-            .onAppear { loadInitialMonths() }
 
             // Status bar blur + floating title
             VStack(spacing: 0) {
@@ -48,11 +61,27 @@ struct CalendarView: View {
                 Spacer()
             }
 
-            // Floating event list button
+            // Floating action buttons
             VStack {
                 Spacer()
                 HStack {
                     Spacer()
+                    Button {
+                        scrollToTodayTrigger += 1
+                    } label: {
+                        HStack(spacing: 6) {
+                            Image(systemName: "scope")
+                                .font(.system(size: 15, weight: .semibold))
+                            Text("今日")
+                                .font(.system(size: 14, weight: .semibold))
+                        }
+                        .foregroundStyle(Color.textPrimary)
+                        .padding(.horizontal, 16)
+                        .padding(.vertical, 12)
+                        .glassBackground(strong: true)
+                    }
+                    .buttonStyle(.plain)
+
                     Button {
                         showEventList = true
                     } label: {
@@ -69,8 +98,10 @@ struct CalendarView: View {
                     }
                     .buttonStyle(.plain)
                     .padding(.trailing, 20)
-                    .padding(.bottom, 16)
                 }
+                .padding(.trailing, 0)
+                .padding(.bottom, 16)
+                .padding(.leading, 20)
             }
         }
         .sheet(isPresented: $showEventList) {
@@ -80,14 +111,22 @@ struct CalendarView: View {
         }
     }
 
-    private func loadInitialMonths() {
+    private func loadInitialMonths() async {
         guard visibleMonths.isEmpty else { return }
+        let granted = await CalendarService.shared.requestAccess()
+        let cal = Self.calendar
         let today = Date()
         var months: [MonthData] = []
         for offset in -12...12 {
-            if let date = Self.calendar.date(byAdding: .month, value: offset, to: today) {
-                months.append(MonthData.from(date: date))
-            }
+            guard let date = cal.date(byAdding: .month, value: offset, to: today) else { continue }
+            let comps = cal.dateComponents([.year, .month], from: date)
+            guard let monthStart = cal.date(from: comps),
+                  let range = cal.range(of: .day, in: .month, for: monthStart),
+                  let monthEnd = cal.date(byAdding: .day, value: range.count, to: monthStart) else { continue }
+            let events: [CalendarEvent] = granted
+                ? await CalendarService.shared.fetchEvents(start: monthStart, end: monthEnd)
+                : []
+            months.append(MonthData.from(date: date, events: events))
         }
         visibleMonths = months
     }
@@ -103,7 +142,7 @@ struct MonthData: Identifiable {
     let days: [DayData]
     let leadingEmptyCount: Int
 
-    static func from(date: Date) -> MonthData {
+    static func from(date: Date, events: [CalendarEvent] = []) -> MonthData {
         let cal = Calendar.current
         let comps = cal.dateComponents([.year, .month], from: date)
         let year = comps.year!
@@ -118,13 +157,17 @@ struct MonthData: Identifiable {
         let isCurrentMonth = today.year == year && today.month == month
         let todayDay = isCurrentMonth ? today.day! : -1
 
-        let sampleEvents = sampleEventsFor(year: year, month: month)
+        let eventsByDay: [Int: [ScheduleItem]] = Dictionary(
+            grouping: events.sorted { $0.startDate < $1.startDate },
+            by: { cal.component(.day, from: $0.startDate) }
+        ).mapValues { $0.map { $0.item } }
 
         let days = range.map { day in
-            DayData(
+            let items = eventsByDay[day] ?? []
+            return DayData(
                 day: day,
                 isToday: day == todayDay,
-                events: sampleEvents.filter { $0.day == day }
+                events: items.map { (day: day, item: $0) }
             )
         }
 
@@ -145,20 +188,6 @@ struct MonthData: Identifiable {
 
     var eventsInMonth: [ScheduleItem] {
         days.flatMap { $0.events.map { $0.item } }
-    }
-
-    private static func sampleEventsFor(year: Int, month: Int) -> [(day: Int, item: ScheduleItem)] {
-        let cal = Calendar.current
-        let today = Date()
-        let todayComps = cal.dateComponents([.year, .month, .day], from: today)
-
-        guard todayComps.year == year && todayComps.month == month else { return [] }
-
-        let todayDay = todayComps.day!
-        return ScheduleItem.sampleToday.enumerated().map { (index, item) in
-            let day = min(todayDay + index * 3, 28)
-            return (day: day, item: item)
-        }
     }
 }
 
