@@ -70,4 +70,26 @@ actor CalendarService {
         }
         return time
     }
+
+    func fetchEvents(start: Date, end: Date) -> [CalendarEvent] {
+        let calendars = store.calendars(for: .event)
+        let predicate = store.predicateForEvents(withStart: start, end: end, calendars: calendars)
+        let events = store.events(matching: predicate)
+        let accents: [ScheduleAccent] = [.blue, .purple, .teal]
+        return events.enumerated().map { idx, ev in
+            CalendarEvent(
+                id: ev.eventIdentifier ?? UUID().uuidString,
+                startDate: ev.startDate,
+                isAllDay: ev.isAllDay,
+                item: ScheduleItem(from: ev, accent: accents[idx % accents.count])
+            )
+        }
+    }
+}
+
+struct CalendarEvent: Identifiable {
+    let id: String
+    let startDate: Date
+    let isAllDay: Bool
+    let item: ScheduleItem
 }

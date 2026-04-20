@@ -1,4 +1,5 @@
 import SwiftUI
+import EventKit
 
 // MARK: - Schedule Item
 
@@ -113,15 +114,56 @@ extension ScheduleItem {
     }
 }
 
-// MARK: - Sample Data
+// MARK: - Init from EKEvent
 
 extension ScheduleItem {
-    static let sampleToday: [ScheduleItem] = [
-        ScheduleItem(title: "チームミーティング", detail: "会議室A・60分", time: "10:00", period: "AM",
-                     fullDate: "4/5（土）10:00 – 11:00 ・ 会議室A", accentColor: .blue),
-        ScheduleItem(title: "ランチ（田中さん）", detail: "駅前カフェ・90分", time: "13:30", period: "PM",
-                     fullDate: "4/5（土）13:30 – 15:00 ・ 駅前カフェ", accentColor: .purple),
-        ScheduleItem(title: "歯医者", detail: "佐藤歯科・30分", time: "17:00", period: "PM",
-                     fullDate: "4/8（火）17:00 – 17:30 ・ 佐藤歯科", accentColor: .teal),
-    ]
+    init(from event: EKEvent, accent: ScheduleAccent = .blue) {
+        let cal = Calendar.current
+        let timeFmt = DateFormatter()
+        timeFmt.locale = Locale(identifier: "ja_JP")
+        timeFmt.dateFormat = "HH:mm"
+
+        let startTime = event.isAllDay ? "" : timeFmt.string(from: event.startDate)
+        let hour = cal.component(.hour, from: event.startDate)
+        let period = hour < 12 ? "AM" : "PM"
+
+        var detailParts: [String] = []
+        if let loc = event.location, !loc.isEmpty { detailParts.append(loc) }
+        if event.isAllDay {
+            detailParts.append("終日")
+        } else {
+            let mins = Int(event.endDate.timeIntervalSince(event.startDate) / 60)
+            if mins > 0 {
+                if mins >= 60 {
+                    let h = mins / 60
+                    let m = mins % 60
+                    detailParts.append(m > 0 ? "\(h)時間\(m)分" : "\(h)時間")
+                } else {
+                    detailParts.append("\(mins)分")
+                }
+            }
+        }
+        let detail = detailParts.isEmpty ? "予定" : detailParts.joined(separator: "・")
+
+        let dateFmt = DateFormatter()
+        dateFmt.locale = Locale(identifier: "ja_JP")
+        dateFmt.dateFormat = "M/d（E）"
+        var fullDateParts: [String] = [dateFmt.string(from: event.startDate)]
+        if event.isAllDay {
+            fullDateParts.append("終日")
+        } else {
+            let endTime = timeFmt.string(from: event.endDate)
+            fullDateParts.append("\(startTime) – \(endTime)")
+        }
+        if let loc = event.location, !loc.isEmpty { fullDateParts.append(loc) }
+
+        self.init(
+            title: (event.title?.isEmpty == false ? event.title! : "(無題)"),
+            detail: detail,
+            time: startTime,
+            period: period,
+            fullDate: fullDateParts.joined(separator: " ・ "),
+            accentColor: accent
+        )
+    }
 }

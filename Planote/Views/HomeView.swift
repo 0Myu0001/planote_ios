@@ -5,6 +5,8 @@ struct HomeView: View {
     let onCalendar: () -> Void
 
     @State private var isTodayExpanded = true
+    @State private var todayEvents: [ScheduleItem] = []
+    @State private var weekCount: Int = 0
 
     var body: some View {
         ScrollView(.vertical, showsIndicators: false) {
@@ -26,7 +28,7 @@ struct HomeView: View {
                             )
                         )
 
-                    Text("今日の予定は\(ScheduleItem.sampleToday.count)件です")
+                    Text("今日の予定は\(todayEvents.count)件です")
                         .font(.system(size: 14))
                         .foregroundStyle(Color.textSecondary)
                 }
@@ -45,19 +47,40 @@ struct HomeView: View {
 
                 // Today's Schedule
                 TodayScheduleCard(
-                    items: ScheduleItem.sampleToday,
+                    items: todayEvents,
                     isExpanded: $isTodayExpanded
                 )
                 .padding(.horizontal, 20)
 
                 // Week Stat
-                WeekStatCard(count: 12)
+                WeekStatCard(count: weekCount)
                     .padding(.horizontal, 20)
                     .padding(.top, 14)
                     .padding(.bottom, 20)
             }
             .padding(.bottom, 16)
         }
+        .task {
+            await loadEvents()
+        }
+    }
+
+    private func loadEvents() async {
+        let granted = await CalendarService.shared.requestAccess()
+        guard granted else { return }
+
+        let cal = Calendar.current
+        let now = Date()
+
+        let todayStart = cal.startOfDay(for: now)
+        let todayEnd = cal.date(byAdding: .day, value: 1, to: todayStart) ?? now
+        let today = await CalendarService.shared.fetchEvents(start: todayStart, end: todayEnd)
+
+        let weekInterval = cal.dateInterval(of: .weekOfYear, for: now) ?? DateInterval(start: todayStart, end: todayEnd)
+        let week = await CalendarService.shared.fetchEvents(start: weekInterval.start, end: weekInterval.end)
+
+        self.todayEvents = today.sorted { $0.startDate < $1.startDate }.map { $0.item }
+        self.weekCount = week.count
     }
 }
 

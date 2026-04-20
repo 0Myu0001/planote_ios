@@ -18,11 +18,15 @@ enum PlanoteTab: String, CaseIterable {
 
 // MARK: - Content View
 
+struct ScanImageItem: Identifiable {
+    let id = UUID()
+    let image: UIImage
+}
+
 struct ContentView: View {
     @State private var selectedTab: PlanoteTab = .home
-    @State private var isReviewPresented = false
     @State private var showToast = false
-    @State private var scannedImage: UIImage? = nil
+    @State private var scanItem: ScanImageItem? = nil
 
     var body: some View {
         ZStack {
@@ -39,10 +43,7 @@ struct ContentView: View {
                 ScanView(
                     onBack: { selectedTab = .home },
                     onScanned: { image in
-                        scannedImage = image
-                        DispatchQueue.main.async {
-                            isReviewPresented = true
-                        }
+                        scanItem = ScanImageItem(image: image)
                     }
                 )
                 .tabItem {
@@ -68,16 +69,14 @@ struct ContentView: View {
                 .zIndex(100)
             }
         }
-        .fullScreenCover(isPresented: $isReviewPresented) {
+        .fullScreenCover(item: $scanItem) { item in
             ReviewView(
-                scannedImage: scannedImage,
+                scannedImage: item.image,
                 onBack: {
-                    isReviewPresented = false
-                    scannedImage = nil
+                    scanItem = nil
                 },
                 onAdd: {
-                    isReviewPresented = false
-                    scannedImage = nil
+                    scanItem = nil
                     withAnimation { showToast = true }
                     DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
                         withAnimation { showToast = false }

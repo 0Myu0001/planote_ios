@@ -125,7 +125,9 @@ struct ScanView: View {
             Task {
                 if let data = try? await item.loadTransferable(type: Data.self),
                    let image = UIImage(data: data) {
-                    onScanned(image)
+                    await MainActor.run {
+                        onScanned(image)
+                    }
                 }
             }
         }
