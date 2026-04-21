@@ -260,7 +260,7 @@ struct TodayScheduleCard: View {
                 .transition(.opacity.combined(with: .move(edge: .top)))
             }
         }
-        .glassBackground()
+        .glassBackground(cornerRadius: 16)
     }
 }
 
@@ -292,3 +292,4 @@ struct WeekStatCard: View {
         .glassBackground()
     }
 }
+

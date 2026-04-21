@@ -13,6 +13,8 @@
 		3DDAED37C9D02822DD442687 /* ScheduleItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92E7736F66CD281DBBD3DD6F /* ScheduleItem.swift */; };
 		5283149131FF794D4629741B /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 306507351E5D168AD91C0DC1 /* HomeView.swift */; };
 		60D826C3D9A3DC96EC1099B5 /* APIModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = C813DE015DA19DD21DC2C6D8 /* APIModels.swift */; };
+		653EE0CF81DA700077AEBF7F /* PlanoteShare.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = C608A305BA7B18B32A44B9C8 /* PlanoteShare.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		81DFAE8CDD34629932C112BC /* ShareViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 968DC1AEF8269F45FB5F91CB /* ShareViewController.swift */; };
 		98AC763D7621BF0BDC3189AF /* ScanView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BB5655E8B60BB8C7EC1DA0F /* ScanView.swift */; };
 		B1E33C0E5686E27E8C9141C9 /* Components.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E340AD323ADFDAF3816F19E /* Components.swift */; };
 		D677B13EC0DDB63A4F6CD8AD /* ReviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 953CE4F021178A076180CAD6 /* ReviewView.swift */; };
@@ -22,18 +24,48 @@
 		FFFB4DE5F848830BDE4F7577 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 426DE661D8374CBB90445835 /* ContentView.swift */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		2E26DE3D4580A698D70D3567 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = AB4BE2975F31353A260FBE4F /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 8BF39BC47ADB0F1EB5633EC1;
+			remoteInfo = PlanoteShare;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		E5E0315489CB45A57E9E3590 /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				653EE0CF81DA700077AEBF7F /* PlanoteShare.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
+		069FFB1662CAD2C13EE34C50 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		1336854DD28B48DE3911DDEB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		306507351E5D168AD91C0DC1 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		3E340AD323ADFDAF3816F19E /* Components.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Components.swift; sourceTree = "<group>"; };
 		426DE661D8374CBB90445835 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		53400360A2B288AE7121E137 /* CalendarService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarService.swift; sourceTree = "<group>"; };
+		5509075BCC2BB62DC64A27DD /* PlanoteShare.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = PlanoteShare.entitlements; sourceTree = "<group>"; };
+		69A8C5E23BC8ECCE920BD49D /* Planote.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Planote.entitlements; sourceTree = "<group>"; };
 		877377DE8FCE5D9A85636378 /* PlanoteApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanoteApp.swift; sourceTree = "<group>"; };
 		8A8AFB4BDDB9EFDC92A11EC4 /* PlanoteTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanoteTheme.swift; sourceTree = "<group>"; };
 		8BB5655E8B60BB8C7EC1DA0F /* ScanView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScanView.swift; sourceTree = "<group>"; };
 		92E7736F66CD281DBBD3DD6F /* ScheduleItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleItem.swift; sourceTree = "<group>"; };
 		953CE4F021178A076180CAD6 /* ReviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewView.swift; sourceTree = "<group>"; };
+		968DC1AEF8269F45FB5F91CB /* ShareViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareViewController.swift; sourceTree = "<group>"; };
 		A4505414263CA76E374362A4 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B4CA4AE02D1FD7480B7DD4B7 /* Planote.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Planote.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		C608A305BA7B18B32A44B9C8 /* PlanoteShare.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = PlanoteShare.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		C813DE015DA19DD21DC2C6D8 /* APIModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIModels.swift; sourceTree = "<group>"; };
 		CA7298EEC2CB1ED5575A05D3 /* CalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarView.swift; sourceTree = "<group>"; };
 		ECEC3F583D26E5B92EBC2B9D /* PlanoteAPIClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanoteAPIClient.swift; sourceTree = "<group>"; };
@@ -52,6 +84,7 @@
 			isa = PBXGroup;
 			children = (
 				79B7762A0B5F859D6B223D41 /* Planote */,
+				C8CA227DC36F8990E15B7D5C /* PlanoteShare */,
 				6EED11B22A0A2AE5D05EFF57 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -69,6 +102,7 @@
 			isa = PBXGroup;
 			children = (
 				B4CA4AE02D1FD7480B7DD4B7 /* Planote.app */,
+				C608A305BA7B18B32A44B9C8 /* PlanoteShare.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -86,6 +120,8 @@
 			isa = PBXGroup;
 			children = (
 				A4505414263CA76E374362A4 /* Assets.xcassets */,
+				069FFB1662CAD2C13EE34C50 /* Info.plist */,
+				69A8C5E23BC8ECCE920BD49D /* Planote.entitlements */,
 				B0B0B89824F3CC59CC9453E5 /* App */,
 				F57CDBA1C1907C339A5A6676 /* Components */,
 				66AA1CB1EF794D1A36CB5761 /* Models */,
@@ -116,6 +152,16 @@
 			path = App;
 			sourceTree = "<group>";
 		};
+		C8CA227DC36F8990E15B7D5C /* PlanoteShare */ = {
+			isa = PBXGroup;
+			children = (
+				1336854DD28B48DE3911DDEB /* Info.plist */,
+				5509075BCC2BB62DC64A27DD /* PlanoteShare.entitlements */,
+				968DC1AEF8269F45FB5F91CB /* ShareViewController.swift */,
+			);
+			path = PlanoteShare;
+			sourceTree = "<group>";
+		};
 		F57CDBA1C1907C339A5A6676 /* Components */ = {
 			isa = PBXGroup;
 			children = (
@@ -127,16 +173,35 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		8BF39BC47ADB0F1EB5633EC1 /* PlanoteShare */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 0EEB22DBA33737D21085EC73 /* Build configuration list for PBXNativeTarget "PlanoteShare" */;
+			buildPhases = (
+				E79A1782409D06B71A8F0098 /* Sources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = PlanoteShare;
+			packageProductDependencies = (
+			);
+			productName = PlanoteShare;
+			productReference = C608A305BA7B18B32A44B9C8 /* PlanoteShare.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 		FD090EB29AA4B8A891DC22FE /* Planote */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 520E181BDE9D894F2B6AB6B8 /* Build configuration list for PBXNativeTarget "Planote" */;
 			buildPhases = (
 				D901CC2615650B59920BF8BA /* Sources */,
 				2C67C3AFFC6C6A61CA7D0B83 /* Resources */,
+				E5E0315489CB45A57E9E3590 /* Embed Foundation Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				F4E37EB19FEF87F9DC24544D /* PBXTargetDependency */,
 			);
 			name = Planote;
 			packageProductDependencies = (
@@ -169,6 +234,7 @@
 			projectRoot = "";
 			targets = (
 				FD090EB29AA4B8A891DC22FE /* Planote */,
+				8BF39BC47ADB0F1EB5633EC1 /* PlanoteShare */,
 			);
 		};
 /* End PBXProject section */
@@ -204,26 +270,57 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		E79A1782409D06B71A8F0098 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				81DFAE8CDD34629932C112BC /* ShareViewController.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		F4E37EB19FEF87F9DC24544D /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 8BF39BC47ADB0F1EB5633EC1 /* PlanoteShare */;
+			targetProxy = 2E26DE3D4580A698D70D3567 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin XCBuildConfiguration section */
+		3D99753857602F60389585B3 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = PlanoteShare/PlanoteShare.entitlements;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 8D3QB4UCUR;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = PlanoteShare/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.planote.app.share;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 		430CE1D7F3428330CE1B9DAD /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Planote/Planote.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Planote/Preview Content\"";
-				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_CFBundleDisplayName = Planote;
-				INFOPLIST_KEY_NSCalendarsFullAccessUsageDescription = "手書きメモから抽出した予定をカレンダーに追加するために使用します";
-				INFOPLIST_KEY_NSCameraUsageDescription = "手書きメモを撮影してスケジュールを抽出するために使用します";
-				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "手書きメモの写真を選択してスケジュールを抽出するために使用します";
-				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = UIInterfaceOrientationPortrait;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = Planote/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -231,6 +328,26 @@
 				MARKETING_VERSION = 1.0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.planote.app;
 				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		54F038D670AC8EEC46AF55ED /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = PlanoteShare/PlanoteShare.entitlements;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = PlanoteShare/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.planote.app.share;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -280,8 +397,6 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = UIInterfaceOrientationPortrait;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
@@ -299,19 +414,13 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Planote/Planote.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Planote/Preview Content\"";
 				DEVELOPMENT_TEAM = 8D3QB4UCUR;
-				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_CFBundleDisplayName = Planote;
-				INFOPLIST_KEY_NSCalendarsFullAccessUsageDescription = "手書きメモから抽出した予定をカレンダーに追加するために使用します";
-				INFOPLIST_KEY_NSCameraUsageDescription = "手書きメモを撮影してスケジュールを抽出するために使用します";
-				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "手書きメモの写真を選択してスケジュールを抽出するために使用します";
-				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = UIInterfaceOrientationPortrait;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = Planote/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -374,8 +483,6 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = UIInterfaceOrientationPortrait;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
@@ -392,6 +499,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		0EEB22DBA33737D21085EC73 /* Build configuration list for PBXNativeTarget "PlanoteShare" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				54F038D670AC8EEC46AF55ED /* Debug */,
+				3D99753857602F60389585B3 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
 		520E181BDE9D894F2B6AB6B8 /* Build configuration list for PBXNativeTarget "Planote" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

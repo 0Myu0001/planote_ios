@@ -10,8 +10,6 @@ settings:
   base:
     SWIFT_VERSION: "5.9"
     TARGETED_DEVICE_FAMILY: "1"
-    INFOPLIST_KEY_UILaunchScreen_Generation: YES
-    INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone: UIInterfaceOrientationPortrait
 
 targets:
   Planote:
@@ -24,16 +22,72 @@ targets:
     resources:
       - path: Planote/Assets.xcassets
       - path: Planote/Preview Content
+    dependencies:
+      - target: PlanoteShare
+    entitlements:
+      path: Planote/Planote.entitlements
+      properties:
+        com.apple.security.application-groups:
+          - group.com.planote.app
+    info:
+      path: Planote/Info.plist
+      properties:
+        CFBundleDisplayName: Planote
+        CFBundleShortVersionString: $(MARKETING_VERSION)
+        CFBundleVersion: $(CURRENT_PROJECT_VERSION)
+        LSRequiresIPhoneOS: true
+        UILaunchScreen:
+          UIColorName: ""
+        UISupportedInterfaceOrientations:
+          - UIInterfaceOrientationPortrait
+        UISupportedInterfaceOrientations~ipad:
+          - UIInterfaceOrientationLandscapeLeft
+          - UIInterfaceOrientationLandscapeRight
+          - UIInterfaceOrientationPortrait
+          - UIInterfaceOrientationPortraitUpsideDown
+        NSCalendarsFullAccessUsageDescription: "手書きメモから抽出した予定をカレンダーに追加するために使用します"
+        NSCameraUsageDescription: "手書きメモを撮影してスケジュールを抽出するために使用します"
+        NSPhotoLibraryUsageDescription: "手書きメモの写真を選択してスケジュールを抽出するために使用します"
+        CFBundleURLTypes:
+          - CFBundleURLName: com.planote.app
+            CFBundleURLSchemes:
+              - planote
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: com.planote.app
-        INFOPLIST_KEY_CFBundleDisplayName: Planote
         MARKETING_VERSION: "1.0.0"
         CURRENT_PROJECT_VERSION: 1
-        GENERATE_INFOPLIST_FILE: YES
-        INFOPLIST_KEY_NSCalendarsFullAccessUsageDescription: "手書きメモから抽出した予定をカレンダーに追加するために使用します"
-        INFOPLIST_KEY_NSCameraUsageDescription: "手書きメモを撮影してスケジュールを抽出するために使用します"
-        INFOPLIST_KEY_NSPhotoLibraryUsageDescription: "手書きメモの写真を選択してスケジュールを抽出するために使用します"
+        GENERATE_INFOPLIST_FILE: NO
         ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
         ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME: AccentColor
         DEVELOPMENT_ASSET_PATHS: "\"Planote/Preview Content\""
+
+  PlanoteShare:
+    type: app-extension
+    platform: iOS
+    sources:
+      - path: PlanoteShare
+    entitlements:
+      path: PlanoteShare/PlanoteShare.entitlements
+      properties:
+        com.apple.security.application-groups:
+          - group.com.planote.app
+    info:
+      path: PlanoteShare/Info.plist
+      properties:
+        CFBundleDisplayName: Planoteに送信
+        CFBundleShortVersionString: $(MARKETING_VERSION)
+        CFBundleVersion: $(CURRENT_PROJECT_VERSION)
+        NSExtension:
+          NSExtensionPointIdentifier: com.apple.share-services
+          NSExtensionPrincipalClass: $(PRODUCT_MODULE_NAME).ShareViewController
+          NSExtensionAttributes:
+            NSExtensionActivationRule:
+              NSExtensionActivationSupportsImageWithMaxCount: 1
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.planote.app.share
+        MARKETING_VERSION: "1.0.0"
+        CURRENT_PROJECT_VERSION: 1
+        GENERATE_INFOPLIST_FILE: NO
+        SKIP_INSTALL: YES

@@ -85,6 +85,25 @@ struct ContentView: View {
                 }
             )
         }
+        .onOpenURL { url in
+            handleIncomingURL(url)
+        }
+    }
+
+    private func handleIncomingURL(_ url: URL) {
+        guard url.scheme == "planote", url.host == "scan" else { return }
+        guard let id = URLComponents(url: url, resolvingAgainstBaseURL: false)?
+            .queryItems?.first(where: { $0.name == "id" })?.value else { return }
+        guard let containerURL = FileManager.default.containerURL(
+            forSecurityApplicationGroupIdentifier: "group.com.planote.app"
+        ) else { return }
+
+        let fileURL = containerURL.appendingPathComponent("shared-\(id).jpg")
+        guard let data = try? Data(contentsOf: fileURL),
+              let image = UIImage(data: data) else { return }
+
+        try? FileManager.default.removeItem(at: fileURL)
+        scanItem = ScanImageItem(image: image)
     }
 }
 
