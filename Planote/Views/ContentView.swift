@@ -27,6 +27,10 @@ struct ContentView: View {
     @State private var selectedTab: PlanoteTab = .home
     @State private var showToast = false
     @State private var scanItem: ScanImageItem? = nil
+    @Environment(\.scenePhase) private var scenePhase
+
+    private static let appGroupID = "group.com.planote.app"
+    private static let sharedFilePrefix = "shared-"
 
     var body: some View {
         ZStack {
@@ -85,25 +89,56 @@ struct ContentView: View {
                 }
             )
         }
-        .onOpenURL { url in
-            handleIncomingURL(url)
+        .onOpenURL { _ in
+            consumePendingShare()
+        }
+        .onChange(of: scenePhase) { _, phase in
+            if phase == .active {
+                consumePendingShare()
+            }
+        }
+        .task {
+            consumePendingShare()
         }
     }
 
-    private func handleIncomingURL(_ url: URL) {
-        guard url.scheme == "planote", url.host == "scan" else { return }
-        guard let id = URLComponents(url: url, resolvingAgainstBaseURL: false)?
-            .queryItems?.first(where: { $0.name == "id" })?.value else { return }
+    /// Share Extension が App Group に書き込んだ画像があれば、最新の1件を取り出して
+    /// ReviewView を起動し、ファイルは消費する。URL スキーム経由でも手動起動でも同じ入口。
+    private func consumePendingShare() {
+        guard scanItem == nil else { return }
         guard let containerURL = FileManager.default.containerURL(
-            forSecurityApplicationGroupIdentifier: "group.com.planote.app"
+            forSecurityApplicationGroupIdentifier: Self.appGroupID
         ) else { return }
 
-        let fileURL = containerURL.appendingPathComponent("shared-\(id).jpg")
-        guard let data = try? Data(contentsOf: fileURL),
-              let image = UIImage(data: data) else { return }
+        let fm = FileManager.default
+        let resourceKeys: [URLResourceKey] = [.creationDateKey]
+        guard let contents = try? fm.contentsOfDirectory(
+            at: containerURL,
+            includingPropertiesForKeys: resourceKeys
+        ) else { return }
 
-        try? FileManager.default.removeItem(at: fileURL)
-        scanItem = ScanImageItem(image: image)
+        let sharedFiles = contents.filter { $0.lastPathComponent.hasPrefix(Self.sharedFilePrefix) }
+        guard !sharedFiles.isEmpty else { return }
+
+        let sorted = sharedFiles.sorted { lhs, rhs in
+            let l = (try? lhs.resourceValues(forKeys: Set(resourceKeys)).creationDate) ?? .distantPast
+            let r = (try? rhs.resourceValues(forKeys: Set(resourceKeys)).creationDate) ?? .distantPast
+            return l > r
+        }
+
+        var picked: UIImage?
+        for url in sorted {
+            if picked == nil,
+               let data = try? Data(contentsOf: url),
+               let image = UIImage(data: data) {
+                picked = image
+            }
+            try? fm.removeItem(at: url)
+        }
+
+        if let image = picked {
+            scanItem = ScanImageItem(image: image)
+        }
     }
 }
 

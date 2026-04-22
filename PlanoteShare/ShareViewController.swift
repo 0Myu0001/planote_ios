@@ -114,7 +114,27 @@ class ShareViewController: UIViewController {
             await fail()
             return
         }
-        openURL(url)
+
+        // 第一候補: NSExtensionContext.open(_:completionHandler:)
+        let openedByContext: Bool = await withCheckedContinuation { continuation in
+            guard let ctx = extensionContext else {
+                continuation.resume(returning: false)
+                return
+            }
+            ctx.open(url) { success in
+                continuation.resume(returning: success)
+            }
+        }
+
+        // 第二候補: responder chain 上で openURL: に応答する最初の UIResponder を叩く。
+        // iOS 18 では share extension 内に UIApplication が露出しないことがあるため、
+        // 型キャストせず selector 応答だけで判定する。
+        if !openedByContext {
+            launchHostApp(url: url)
+        }
+
+        // URL オープンの発火を iOS に処理させるための猶予。
+        try? await Task.sleep(nanoseconds: 600_000_000)
         extensionContext?.completeRequest(returningItems: nil, completionHandler: nil)
     }
 
@@ -126,13 +146,14 @@ class ShareViewController: UIViewController {
         extensionContext?.cancelRequest(withError: NSError(domain: "PlanoteShare", code: -1))
     }
 
-    /// Extension から host app を起動する。Share extension では NSExtensionContext.open は利用できないため、
-    /// responder chain を遡って UIApplication.open(_:options:completionHandler:) を呼ぶ。
-    @objc private func openURL(_ url: URL) {
-        var responder: UIResponder? = self
-        let selector = sel_registerName("openURL:")
+    /// Responder chain を遡って `openURL:` に応答する最初の responder を探し、
+    /// deprecated セレクタ経由で host app を起動する。iOS 18 では share extension 内で
+    /// UIApplication が responder chain に現れない場合があるため、型キャストはしない。
+    private func launchHostApp(url: URL) {
+        let selector = NSSelectorFromString("openURL:")
+        var responder: UIResponder? = self.next
         while let current = responder {
-            if current.responds(to: selector) && !(current is ShareViewController) {
+            if current.responds(to: selector) {
                 _ = current.perform(selector, with: url)
                 return
             }
