@@ -248,7 +248,7 @@ struct CornerMark: View {
 // MARK: - Shared Nav Bar
 
 struct NavBar: View {
-    let title: String
+    let title: LocalizedStringKey
     let onBack: () -> Void
 
     var body: some View {

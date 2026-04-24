@@ -100,19 +100,20 @@ struct PlanoteBackground: View {
 
 struct GlassBackgroundLegacy: ViewModifier {
     var strong: Bool = false
+    var cornerRadius: CGFloat = 22
     @Environment(\.colorScheme) var colorScheme
 
     func body(content: Content) -> some View {
         content
             .background {
-                RoundedRectangle(cornerRadius: 22, style: .continuous)
+                RoundedRectangle(cornerRadius: cornerRadius, style: .continuous)
                     .fill(strong ? Color.glassBgStrong : Color.glassBg)
                     .background(
-                        RoundedRectangle(cornerRadius: 22, style: .continuous)
+                        RoundedRectangle(cornerRadius: cornerRadius, style: .continuous)
                             .fill(.ultraThinMaterial)
                     )
                     .overlay(
-                        RoundedRectangle(cornerRadius: 22, style: .continuous)
+                        RoundedRectangle(cornerRadius: cornerRadius, style: .continuous)
                             .stroke(
                                 strong ? Color.glassBorderStrong : Color.glassBorder,
                                 lineWidth: 1
@@ -136,11 +137,12 @@ struct GlassBackgroundLegacy: ViewModifier {
 }
 
 extension View {
-    func glassBackground(strong: Bool = false) -> some View {
+    func glassBackground(cornerRadius: CGFloat = 22, strong: Bool = false) -> some View {
         if #available(iOS 26.0, *) {
             return self.glassEffect(.regular)
         } else {
-            return self.modifier(GlassBackgroundLegacy(strong: strong))
+            return self.modifier(GlassBackgroundLegacy(strong: strong, cornerRadius: cornerRadius))
         }
     }
 }
+

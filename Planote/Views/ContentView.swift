@@ -3,9 +3,17 @@ import SwiftUI
 // MARK: - Tab Definition
 
 enum PlanoteTab: String, CaseIterable {
-    case home = "ホーム"
-    case scan = "スキャン"
-    case calendar = "カレンダー"
+    case home
+    case scan
+    case calendar
+
+    var titleKey: LocalizedStringKey {
+        switch self {
+        case .home: return "ホーム"
+        case .scan: return "スキャン"
+        case .calendar: return "カレンダー"
+        }
+    }
 
     var icon: String {
         switch self {
@@ -27,6 +35,10 @@ struct ContentView: View {
     @State private var selectedTab: PlanoteTab = .home
     @State private var showToast = false
     @State private var scanItem: ScanImageItem? = nil
+    @Environment(\.scenePhase) private var scenePhase
+
+    private static let appGroupID = "group.com.planote.app"
+    private static let sharedFilePrefix = "shared-"
 
     var body: some View {
         ZStack {
@@ -36,7 +48,7 @@ struct ContentView: View {
                     onCalendar: { selectedTab = .calendar }
                 )
                 .tabItem {
-                    Label(PlanoteTab.home.rawValue, systemImage: PlanoteTab.home.icon)
+                    Label(PlanoteTab.home.titleKey, systemImage: PlanoteTab.home.icon)
                 }
                 .tag(PlanoteTab.home)
 
@@ -47,13 +59,13 @@ struct ContentView: View {
                     }
                 )
                 .tabItem {
-                    Label(PlanoteTab.scan.rawValue, systemImage: PlanoteTab.scan.icon)
+                    Label(PlanoteTab.scan.titleKey, systemImage: PlanoteTab.scan.icon)
                 }
                 .tag(PlanoteTab.scan)
 
                 CalendarView(onBack: { selectedTab = .home })
                     .tabItem {
-                        Label(PlanoteTab.calendar.rawValue, systemImage: PlanoteTab.calendar.icon)
+                        Label(PlanoteTab.calendar.titleKey, systemImage: PlanoteTab.calendar.icon)
                     }
                     .tag(PlanoteTab.calendar)
             }
@@ -85,6 +97,56 @@ struct ContentView: View {
                 }
             )
         }
+        .onOpenURL { _ in
+            consumePendingShare()
+        }
+        .onChange(of: scenePhase) { _, phase in
+            if phase == .active {
+                consumePendingShare()
+            }
+        }
+        .task {
+            consumePendingShare()
+        }
+    }
+
+    /// Share Extension が App Group に書き込んだ画像があれば、最新の1件を取り出して
+    /// ReviewView を起動し、ファイルは消費する。URL スキーム経由でも手動起動でも同じ入口。
+    private func consumePendingShare() {
+        guard scanItem == nil else { return }
+        guard let containerURL = FileManager.default.containerURL(
+            forSecurityApplicationGroupIdentifier: Self.appGroupID
+        ) else { return }
+
+        let fm = FileManager.default
+        let resourceKeys: [URLResourceKey] = [.creationDateKey]
+        guard let contents = try? fm.contentsOfDirectory(
+            at: containerURL,
+            includingPropertiesForKeys: resourceKeys
+        ) else { return }
+
+        let sharedFiles = contents.filter { $0.lastPathComponent.hasPrefix(Self.sharedFilePrefix) }
+        guard !sharedFiles.isEmpty else { return }
+
+        let sorted = sharedFiles.sorted { lhs, rhs in
+            let l = (try? lhs.resourceValues(forKeys: Set(resourceKeys)).creationDate) ?? .distantPast
+            let r = (try? rhs.resourceValues(forKeys: Set(resourceKeys)).creationDate) ?? .distantPast
+            return l > r
+        }
+
+        var picked: UIImage?
+        for url in sorted {
+            if picked == nil,
+               let data = try? Data(contentsOf: url),
+               let image = UIImage(data: data) {
+                picked = image
+            }
+            try? fm.removeItem(at: url)
+        }
+
+        if let image = picked {
+            scanItem = ScanImageItem(image: image)
+        }
     }
 }
 
@@ -92,7 +154,7 @@ struct ContentView: View {
 // MARK: - Toast
 
 struct ToastView: View {
-    let message: String
+    let message: LocalizedStringKey
 
     var body: some View {
         Text(message)

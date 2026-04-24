@@ -1,0 +1,438 @@
+{
+  "sourceLanguage" : "ja",
+  "version" : "1.0",
+  "strings" : {
+    "ホーム" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Home" } },
+        "ko" : { "stringUnit" : { "state" : "translated", "value" : "홈" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "主页" } },
+        "zh-Hant" : { "stringUnit" : { "state" : "translated", "value" : "主頁" } }
+      }
+    },
+    "スキャン" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Scan" } },
+        "ko" : { "stringUnit" : { "state" : "translated", "value" : "스캔" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "扫描" } },
+        "zh-Hant" : { "stringUnit" : { "state" : "translated", "value" : "掃描" } }
+      }
+    },
+    "カレンダー" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Calendar" } },
+        "ko" : { "stringUnit" : { "state" : "translated", "value" : "캘린더" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "日历" } },
+        "zh-Hant" : { "stringUnit" : { "state" : "translated", "value" : "日曆" } }
+      }
+    },
+    "設定" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Settings" } },
+        "ko" : { "stringUnit" : { "state" : "translated", "value" : "설정" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "设置" } },
+        "zh-Hant" : { "stringUnit" : { "state" : "translated", "value" : "設定" } }
+      }
+    },
+    "戻る" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Back" } },
+        "ko" : { "stringUnit" : { "state" : "translated", "value" : "뒤로" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "返回" } },
+        "zh-Hant" : { "stringUnit" : { "state" : "translated", "value" : "返回" } }
+      }
+    },
+    "今日" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Today" } },
+        "ko" : { "stringUnit" : { "state" : "translated", "value" : "오늘" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "今天" } },
+        "zh-Hant" : { "stringUnit" : { "state" : "translated", "value" : "今天" } }
+      }
+    },
+    "予定一覧" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Events" } },
+        "ko" : { "stringUnit" : { "state" : "translated", "value" : "일정 목록" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "日程列表" } },
+        "zh-Hant" : { "stringUnit" : { "state" : "translated", "value" : "行程列表" } }
+      }
+    },
+    "表示中の期間に予定はありません" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "No events in this period" } },
+        "ko" : { "stringUnit" : { "state" : "translated", "value" : "이 기간에 일정이 없습니다" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "此期间没有日程" } },
+        "zh-Hant" : { "stringUnit" : { "state" : "translated", "value" : "此期間沒有行程" } }
+      }
+    },
+    "今日の予定" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Today's Schedule" } },
+        "ko" : { "stringUnit" : { "state" : "translated", "value" : "오늘의 일정" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "今日日程" } },
+        "zh-Hant" : { "stringUnit" : { "state" : "translated", "value" : "今日行程" } }
+      }
+    },
+    "タップして詳細を表示" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Tap to view details" } },
+        "ko" : { "stringUnit" : { "state" : "translated", "value" : "탭하여 세부 정보 보기" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "点按查看详情" } },
+        "zh-Hant" : { "stringUnit" : { "state" : "translated", "value" : "點按查看詳情" } }
+      }
+    },
+    "今週の予定" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "This Week" } },
+        "ko" : { "stringUnit" : { "state" : "translated", "value" : "이번 주 일정" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "本周日程" } },
+        "zh-Hant" : { "stringUnit" : { "state" : "translated", "value" : "本週行程" } }
+      }
+    },
+    "先週より2件多いです" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "2 more than last week" } },
+        "ko" : { "stringUnit" : { "state" : "translated", "value" : "지난주보다 2건 많음" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "比上周多2件" } },
+        "zh-Hant" : { "stringUnit" : { "state" : "translated", "value" : "比上週多2件" } }
+      }
+    },
+    "GOOD MORNING" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "GOOD MORNING" } },
+        "ko" : { "stringUnit" : { "state" : "translated", "value" : "좋은 아침" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "早上好" } },
+        "zh-Hant" : { "stringUnit" : { "state" : "translated", "value" : "早安" } }
+      }
+    },
+    "今日の予定は%lld件です" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "You have %lld event(s) today" } },
+        "ko" : { "stringUnit" : { "state" : "translated", "value" : "오늘 일정이 %lld건 있습니다" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "今天有 %lld 件日程" } },
+        "zh-Hant" : { "stringUnit" : { "state" : "translated", "value" : "今天有 %lld 件行程" } }
+      }
+    },
+    "✓ カレンダーに追加しました" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "✓ Added to Calendar" } },
+        "ko" : { "stringUnit" : { "state" : "translated", "value" : "✓ 캘린더에 추가되었습니다" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "✓ 已添加到日历" } },
+        "zh-Hant" : { "stringUnit" : { "state" : "translated", "value" : "✓ 已加入日曆" } }
+      }
+    },
+    "撮影する準備ができましたか？" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Ready to capture?" } },
+        "ko" : { "stringUnit" : { "state" : "translated", "value" : "촬영할 준비가 되셨나요?" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "准备好拍照了吗？" } },
+        "zh-Hant" : { "stringUnit" : { "state" : "translated", "value" : "準備好拍照了嗎？" } }
+      }
+    },
+    "下のボタンをタップして「カメラで撮影」を選択してください。" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Tap the button below and choose \"Take Photo\"." } },
+        "ko" : { "stringUnit" : { "state" : "translated", "value" : "아래 버튼을 탭하고 \"카메라로 촬영\"을 선택하세요." } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "点击下方按钮并选择「拍照」。" } },
+        "zh-Hant" : { "stringUnit" : { "state" : "translated", "value" : "點擊下方按鈕並選擇「拍照」。" } }
+      }
+    },
+    "すでに写真やスクリーンショット、PDFがありますか？" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Already have a photo, screenshot, or PDF?" } },
+        "ko" : { "stringUnit" : { "state" : "translated", "value" : "이미 사진, 스크린샷 또는 PDF가 있나요?" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "已有照片、截图或 PDF 了吗？" } },
+        "zh-Hant" : { "stringUnit" : { "state" : "translated", "value" : "已有照片、截圖或 PDF 了嗎？" } }
+      }
+    },
+    "下のボタンをタップして「写真を選択」もしくは「ファイルを選択」を選択して、予定が書かれている写真を選択してください。" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Tap the button below and choose \"Choose Photo\" or \"Choose File\", then select an image with your schedule." } },
+        "ko" : { "stringUnit" : { "state" : "translated", "value" : "아래 버튼을 탭하고 \"사진 선택\" 또는 \"파일 선택\"을 선택한 후, 일정이 적힌 사진을 선택하세요." } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "点击下方按钮,选择「选择照片」或「选择文件」,然后选择写有日程的图片。" } },
+        "zh-Hant" : { "stringUnit" : { "state" : "translated", "value" : "點擊下方按鈕,選擇「選擇照片」或「選擇檔案」,然後選擇寫有行程的圖片。" } }
+      }
+    },
+    "タップして写真を選択" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Tap to choose a photo" } },
+        "ko" : { "stringUnit" : { "state" : "translated", "value" : "탭하여 사진 선택" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "点按选择照片" } },
+        "zh-Hant" : { "stringUnit" : { "state" : "translated", "value" : "點按選擇照片" } }
+      }
+    },
+    "写真を追加" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Add Photo" } },
+        "ko" : { "stringUnit" : { "state" : "translated", "value" : "사진 추가" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "添加照片" } },
+        "zh-Hant" : { "stringUnit" : { "state" : "translated", "value" : "新增照片" } }
+      }
+    },
+    "カメラで撮影" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Take Photo" } },
+        "ko" : { "stringUnit" : { "state" : "translated", "value" : "카메라로 촬영" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "拍照" } },
+        "zh-Hant" : { "stringUnit" : { "state" : "translated", "value" : "拍照" } }
+      }
+    },
+    "写真を選択" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Choose Photo" } },
+        "ko" : { "stringUnit" : { "state" : "translated", "value" : "사진 선택" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "选择照片" } },
+        "zh-Hant" : { "stringUnit" : { "state" : "translated", "value" : "選擇照片" } }
+      }
+    },
+    "ファイルを選択" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Choose File" } },
+        "ko" : { "stringUnit" : { "state" : "translated", "value" : "파일 선택" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "选择文件" } },
+        "zh-Hant" : { "stringUnit" : { "state" : "translated", "value" : "選擇檔案" } }
+      }
+    },
+    "キャンセル" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Cancel" } },
+        "ko" : { "stringUnit" : { "state" : "translated", "value" : "취소" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "取消" } },
+        "zh-Hant" : { "stringUnit" : { "state" : "translated", "value" : "取消" } }
+      }
+    },
+    "確認" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Review" } },
+        "ko" : { "stringUnit" : { "state" : "translated", "value" : "확인" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "确认" } },
+        "zh-Hant" : { "stringUnit" : { "state" : "translated", "value" : "確認" } }
+      }
+    },
+    "画像を解析中..." : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Analyzing image..." } },
+        "ko" : { "stringUnit" : { "state" : "translated", "value" : "이미지 분석 중..." } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "正在分析图像..." } },
+        "zh-Hant" : { "stringUnit" : { "state" : "translated", "value" : "正在分析影像..." } }
+      }
+    },
+    "手書きメモからスケジュールを抽出しています" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Extracting schedule from handwritten notes" } },
+        "ko" : { "stringUnit" : { "state" : "translated", "value" : "손글씨 메모에서 일정을 추출하고 있습니다" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "正在从手写笔记中提取日程" } },
+        "zh-Hant" : { "stringUnit" : { "state" : "translated", "value" : "正在從手寫筆記中擷取行程" } }
+      }
+    },
+    "認識完了" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Recognized" } },
+        "ko" : { "stringUnit" : { "state" : "translated", "value" : "인식 완료" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "识别完成" } },
+        "zh-Hant" : { "stringUnit" : { "state" : "translated", "value" : "識別完成" } }
+      }
+    },
+    "抽出された予定" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Extracted Events" } },
+        "ko" : { "stringUnit" : { "state" : "translated", "value" : "추출된 일정" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "提取的日程" } },
+        "zh-Hant" : { "stringUnit" : { "state" : "translated", "value" : "擷取的行程" } }
+      }
+    },
+    "%lld件選択中" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "%lld selected" } },
+        "ko" : { "stringUnit" : { "state" : "translated", "value" : "%lld건 선택됨" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "已选 %lld 件" } },
+        "zh-Hant" : { "stringUnit" : { "state" : "translated", "value" : "已選 %lld 件" } }
+      }
+    },
+    "予定が見つかりませんでした" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "No events found" } },
+        "ko" : { "stringUnit" : { "state" : "translated", "value" : "일정을 찾을 수 없습니다" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "未找到日程" } },
+        "zh-Hant" : { "stringUnit" : { "state" : "translated", "value" : "未找到行程" } }
+      }
+    },
+    "再スキャン" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Rescan" } },
+        "ko" : { "stringUnit" : { "state" : "translated", "value" : "다시 스캔" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "重新扫描" } },
+        "zh-Hant" : { "stringUnit" : { "state" : "translated", "value" : "重新掃描" } }
+      }
+    },
+    "カレンダーに追加" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Add to Calendar" } },
+        "ko" : { "stringUnit" : { "state" : "translated", "value" : "캘린더에 추가" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "添加到日历" } },
+        "zh-Hant" : { "stringUnit" : { "state" : "translated", "value" : "加入日曆" } }
+      }
+    },
+    "エラーが発生しました" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "An error occurred" } },
+        "ko" : { "stringUnit" : { "state" : "translated", "value" : "오류가 발생했습니다" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "发生错误" } },
+        "zh-Hant" : { "stringUnit" : { "state" : "translated", "value" : "發生錯誤" } }
+      }
+    },
+    "再試行" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Retry" } },
+        "ko" : { "stringUnit" : { "state" : "translated", "value" : "다시 시도" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "重试" } },
+        "zh-Hant" : { "stringUnit" : { "state" : "translated", "value" : "重試" } }
+      }
+    },
+    "画像が選択されていません" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "No image selected" } },
+        "ko" : { "stringUnit" : { "state" : "translated", "value" : "이미지가 선택되지 않았습니다" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "未选择图像" } },
+        "zh-Hant" : { "stringUnit" : { "state" : "translated", "value" : "未選擇影像" } }
+      }
+    },
+    "%lld件の予定をカレンダーに追加しました" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Added %lld event(s) to Calendar" } },
+        "ko" : { "stringUnit" : { "state" : "translated", "value" : "%lld건의 일정을 캘린더에 추가했습니다" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "已将 %lld 件日程添加到日历" } },
+        "zh-Hant" : { "stringUnit" : { "state" : "translated", "value" : "已將 %lld 件行程加入日曆" } }
+      }
+    },
+    "%lld件中%lld件をカレンダーに追加しました" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Added %2$lld of %1$lld events to Calendar" } },
+        "ko" : { "stringUnit" : { "state" : "translated", "value" : "%1$lld건 중 %2$lld건을 캘린더에 추가했습니다" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "已将 %1$lld 件中的 %2$lld 件添加到日历" } },
+        "zh-Hant" : { "stringUnit" : { "state" : "translated", "value" : "已將 %1$lld 件中的 %2$lld 件加入日曆" } }
+      }
+    },
+    "カレンダーへのアクセスが許可されていません" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Calendar access is not granted" } },
+        "ko" : { "stringUnit" : { "state" : "translated", "value" : "캘린더 접근이 허용되지 않았습니다" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "未授权访问日历" } },
+        "zh-Hant" : { "stringUnit" : { "state" : "translated", "value" : "未授權存取日曆" } }
+      }
+    },
+    "無効なURLです" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Invalid URL" } },
+        "ko" : { "stringUnit" : { "state" : "translated", "value" : "잘못된 URL입니다" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "无效的 URL" } },
+        "zh-Hant" : { "stringUnit" : { "state" : "translated", "value" : "無效的 URL" } }
+      }
+    },
+    "画像の変換に失敗しました" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Failed to convert image" } },
+        "ko" : { "stringUnit" : { "state" : "translated", "value" : "이미지 변환에 실패했습니다" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "图像转换失败" } },
+        "zh-Hant" : { "stringUnit" : { "state" : "translated", "value" : "影像轉換失敗" } }
+      }
+    },
+    "アップロードに失敗しました (コード: %lld)" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Upload failed (code: %lld)" } },
+        "ko" : { "stringUnit" : { "state" : "translated", "value" : "업로드에 실패했습니다 (코드: %lld)" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "上传失败(代码:%lld)" } },
+        "zh-Hant" : { "stringUnit" : { "state" : "translated", "value" : "上傳失敗(代碼:%lld)" } }
+      }
+    },
+    "サーバーエラー (コード: %lld)" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Server error (code: %lld)" } },
+        "ko" : { "stringUnit" : { "state" : "translated", "value" : "서버 오류 (코드: %lld)" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "服务器错误(代码:%lld)" } },
+        "zh-Hant" : { "stringUnit" : { "state" : "translated", "value" : "伺服器錯誤(代碼:%lld)" } }
+      }
+    },
+    "画像の処理に失敗しました" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Failed to process image" } },
+        "ko" : { "stringUnit" : { "state" : "translated", "value" : "이미지 처리에 실패했습니다" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "图像处理失败" } },
+        "zh-Hant" : { "stringUnit" : { "state" : "translated", "value" : "影像處理失敗" } }
+      }
+    },
+    "処理がタイムアウトしました" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Processing timed out" } },
+        "ko" : { "stringUnit" : { "state" : "translated", "value" : "처리 시간이 초과되었습니다" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "处理超时" } },
+        "zh-Hant" : { "stringUnit" : { "state" : "translated", "value" : "處理逾時" } }
+      }
+    },
+    "終日" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "All-day" } },
+        "ko" : { "stringUnit" : { "state" : "translated", "value" : "종일" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "全天" } },
+        "zh-Hant" : { "stringUnit" : { "state" : "translated", "value" : "全天" } }
+      }
+    },
+    "予定" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Event" } },
+        "ko" : { "stringUnit" : { "state" : "translated", "value" : "일정" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "日程" } },
+        "zh-Hant" : { "stringUnit" : { "state" : "translated", "value" : "行程" } }
+      }
+    },
+    "(無題)" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "(No title)" } },
+        "ko" : { "stringUnit" : { "state" : "translated", "value" : "(제목 없음)" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "(无标题)" } },
+        "zh-Hant" : { "stringUnit" : { "state" : "translated", "value" : "(無標題)" } }
+      }
+    },
+    "%1$lld時間%2$lld分" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "%1$lldh %2$lldm" } },
+        "ko" : { "stringUnit" : { "state" : "translated", "value" : "%1$lld시간 %2$lld분" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "%1$lld小时%2$lld分钟" } },
+        "zh-Hant" : { "stringUnit" : { "state" : "translated", "value" : "%1$lld小時%2$lld分鐘" } }
+      }
+    },
+    "%lld時間" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "%lldh" } },
+        "ko" : { "stringUnit" : { "state" : "translated", "value" : "%lld시간" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "%lld小时" } },
+        "zh-Hant" : { "stringUnit" : { "state" : "translated", "value" : "%lld小時" } }
+      }
+    },
+    "%lld分" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "%lldm" } },
+        "ko" : { "stringUnit" : { "state" : "translated", "value" : "%lld분" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "%lld分钟" } },
+        "zh-Hant" : { "stringUnit" : { "state" : "translated", "value" : "%lld分鐘" } }
+      }
+    },
+    "Planoteに送信中…" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Sending to Planote…" } },
+        "ko" : { "stringUnit" : { "state" : "translated", "value" : "Planote로 보내는 중…" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "正在发送到 Planote…" } },
+        "zh-Hant" : { "stringUnit" : { "state" : "translated", "value" : "正在傳送至 Planote…" } }
+      }
+    },
+    "送信できませんでした" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Couldn't send" } },
+        "ko" : { "stringUnit" : { "state" : "translated", "value" : "보낼 수 없습니다" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "发送失败" } },
+        "zh-Hant" : { "stringUnit" : { "state" : "translated", "value" : "傳送失敗" } }
+      }
+    }
+  }
+}

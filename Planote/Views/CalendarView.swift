@@ -12,7 +12,6 @@ struct CalendarView: View {
     @State private var scrollToTodayTrigger = 0
 
     private static let calendar = Calendar.current
-    private static let weekdays = ["日", "月", "火", "水", "木", "金", "土"]
 
     private static var todayMonthID: String {
         let comps = calendar.dateComponents([.year, .month], from: Date())
@@ -172,8 +171,8 @@ struct MonthData: Identifiable {
         }
 
         let formatter = DateFormatter()
-        formatter.locale = Locale(identifier: "ja_JP")
-        formatter.dateFormat = "yyyy年 M月"
+        formatter.locale = Locale.current
+        formatter.setLocalizedDateFormatFromTemplate("yMMMM")
         let title = formatter.string(from: firstOfMonth)
 
         return MonthData(
@@ -204,7 +203,12 @@ struct DayData {
 private struct MonthView: View {
     let month: MonthData
     private let columns = Array(repeating: GridItem(.flexible(), spacing: 0), count: 7)
-    private let weekdays = ["日", "月", "火", "水", "木", "金", "土"]
+    private var weekdays: [String] {
+        let cal = Calendar.current
+        let symbols = cal.veryShortStandaloneWeekdaySymbols
+        // Reorder to match Sun-first layout (symbols are already Sunday-first in Gregorian)
+        return symbols
+    }
 
     var body: some View {
         VStack(spacing: 0) {

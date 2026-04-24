@@ -148,7 +148,7 @@ struct ExtractedItemRow: View {
 // MARK: - Quick Action Button
 
 struct QuickActionButton: View {
-    let title: String
+    let title: LocalizedStringKey
     let icon: String
     let isPrimary: Bool
     let action: () -> Void
@@ -186,8 +186,8 @@ struct QuickActionButton: View {
 // MARK: - Section Header
 
 struct SectionHeader: View {
-    let title: String
-    var trailing: String? = nil
+    let title: LocalizedStringKey
+    var trailing: LocalizedStringKey? = nil
     var action: (() -> Void)? = nil
 
     var body: some View {
@@ -260,7 +260,7 @@ struct TodayScheduleCard: View {
                 .transition(.opacity.combined(with: .move(edge: .top)))
             }
         }
-        .glassBackground()
+        .glassBackground(cornerRadius: 16)
     }
 }
 
@@ -292,3 +292,4 @@ struct WeekStatCard: View {
         .glassBackground()
     }
 }
+
