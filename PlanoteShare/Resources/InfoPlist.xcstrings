@@ -1,15 +1,53 @@
 {
   "sourceLanguage" : "ja",
-  "version" : "1.0",
   "strings" : {
     "CFBundleDisplayName" : {
+      "comment" : "Bundle display name",
       "localizations" : {
-        "ja" : { "stringUnit" : { "state" : "translated", "value" : "Planoteに送信" } },
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Send to Planote" } },
-        "ko" : { "stringUnit" : { "state" : "translated", "value" : "Planote로 보내기" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "发送到 Planote" } },
-        "zh-Hant" : { "stringUnit" : { "state" : "translated", "value" : "傳送至 Planote" } }
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Send to Planote"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Planoteに送信"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Planote로 보내기"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "发送到 Planote"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "傳送至 Planote"
+          }
+        }
+      }
+    },
+    "CFBundleName" : {
+      "comment" : "Bundle name",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "PlanoteShare"
+          }
+        }
       }
     }
-  }
+  },
+  "version" : "1.0"
 }
