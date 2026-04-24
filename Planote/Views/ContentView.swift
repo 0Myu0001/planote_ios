@@ -3,9 +3,17 @@ import SwiftUI
 // MARK: - Tab Definition
 
 enum PlanoteTab: String, CaseIterable {
-    case home = "ホーム"
-    case scan = "スキャン"
-    case calendar = "カレンダー"
+    case home
+    case scan
+    case calendar
+
+    var titleKey: LocalizedStringKey {
+        switch self {
+        case .home: return "ホーム"
+        case .scan: return "スキャン"
+        case .calendar: return "カレンダー"
+        }
+    }
 
     var icon: String {
         switch self {
@@ -40,7 +48,7 @@ struct ContentView: View {
                     onCalendar: { selectedTab = .calendar }
                 )
                 .tabItem {
-                    Label(PlanoteTab.home.rawValue, systemImage: PlanoteTab.home.icon)
+                    Label(PlanoteTab.home.titleKey, systemImage: PlanoteTab.home.icon)
                 }
                 .tag(PlanoteTab.home)
 
@@ -51,13 +59,13 @@ struct ContentView: View {
                     }
                 )
                 .tabItem {
-                    Label(PlanoteTab.scan.rawValue, systemImage: PlanoteTab.scan.icon)
+                    Label(PlanoteTab.scan.titleKey, systemImage: PlanoteTab.scan.icon)
                 }
                 .tag(PlanoteTab.scan)
 
                 CalendarView(onBack: { selectedTab = .home })
                     .tabItem {
-                        Label(PlanoteTab.calendar.rawValue, systemImage: PlanoteTab.calendar.icon)
+                        Label(PlanoteTab.calendar.titleKey, systemImage: PlanoteTab.calendar.icon)
                     }
                     .tag(PlanoteTab.calendar)
             }
@@ -146,7 +154,7 @@ struct ContentView: View {
 // MARK: - Toast
 
 struct ToastView: View {
-    let message: String
+    let message: LocalizedStringKey
 
     var body: some View {
         Text(message)

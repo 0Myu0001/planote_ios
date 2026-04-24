@@ -17,6 +17,7 @@ struct ReviewView: View {
     @State private var noteId: String = ""
     @State private var candidates: [ExtractionCandidate] = []
     @State private var calendarResultMessage: String?
+    @State private var calendarResultIsError: Bool = false
     @Environment(\.colorScheme) var colorScheme
 
     private var selectedCount: Int {
@@ -51,7 +52,7 @@ struct ReviewView: View {
                     .background {
                         Capsule()
                             .fill(
-                                message.contains("許可されていません")
+                                calendarResultIsError
                                 ? Color(hex: 0xFF3B30)
                                 : Color(hex: 0x34C759)
                             )
@@ -284,7 +285,7 @@ struct ReviewView: View {
 
     private func processImage() async {
         guard let image = scannedImage else {
-            reviewState = .error("画像が選択されていません")
+            reviewState = .error(String(localized: "画像が選択されていません"))
             return
         }
 
@@ -324,15 +325,21 @@ struct ReviewView: View {
                 }
                 let total = selectedCandidates.count
                 await MainActor.run {
+                    calendarResultIsError = false
                     if successCount == total {
-                        calendarResultMessage = "\(successCount)件の予定をカレンダーに追加しました"
+                        calendarResultMessage = String(
+                            localized: "\(successCount)件の予定をカレンダーに追加しました"
+                        )
                     } else {
-                        calendarResultMessage = "\(total)件中\(successCount)件をカレンダーに追加しました"
+                        calendarResultMessage = String(
+                            localized: "\(total)件中\(successCount)件をカレンダーに追加しました"
+                        )
                     }
                 }
             } else {
                 await MainActor.run {
-                    calendarResultMessage = "カレンダーへのアクセスが許可されていません"
+                    calendarResultIsError = true
+                    calendarResultMessage = String(localized: "カレンダーへのアクセスが許可されていません")
                 }
             }
 

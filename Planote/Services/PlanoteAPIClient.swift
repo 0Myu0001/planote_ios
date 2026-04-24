@@ -189,17 +189,18 @@ enum APIError: LocalizedError {
     var errorDescription: String? {
         switch self {
         case .invalidURL:
-            return "無効なURLです"
+            return String(localized: "無効なURLです")
         case .invalidImage:
-            return "画像の変換に失敗しました"
+            return String(localized: "画像の変換に失敗しました")
         case .uploadFailed(let code):
-            return "アップロードに失敗しました (コード: \(code))"
+            return String(localized: "アップロードに失敗しました (コード: \(code))")
         case .serverError(let code, let body):
-            return "サーバーエラー (コード: \(code))\(body.map { ": \($0)" } ?? "")"
+            let base = String(localized: "サーバーエラー (コード: \(code))")
+            return base + (body.map { ": \($0)" } ?? "")
         case .processingFailed:
-            return "画像の処理に失敗しました"
+            return String(localized: "画像の処理に失敗しました")
         case .timeout:
-            return "処理がタイムアウトしました"
+            return String(localized: "処理がタイムアウトしました")
         }
     }
 }

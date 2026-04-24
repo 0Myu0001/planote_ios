@@ -76,7 +76,7 @@ extension ScheduleItem {
             let duration = Self.durationString(from: start, to: end)
             if !duration.isEmpty { detailParts.append(duration) }
         }
-        let detail = detailParts.isEmpty ? candidate.type : detailParts.joined(separator: "・")
+        let detail = detailParts.isEmpty ? candidate.type : detailParts.joined(separator: " ・ ")
 
         var fullDateParts: [String] = []
         if let date = candidate.date { fullDateParts.append(date) }
@@ -108,9 +108,11 @@ extension ScheduleItem {
         if mins >= 60 {
             let h = mins / 60
             let m = mins % 60
-            return m > 0 ? "\(h)時間\(m)分" : "\(h)時間"
+            return m > 0
+                ? String(localized: "\(h)時間\(m)分")
+                : String(localized: "\(h)時間")
         }
-        return "\(mins)分"
+        return String(localized: "\(mins)分")
     }
 }
 
@@ -120,8 +122,8 @@ extension ScheduleItem {
     init(from event: EKEvent, accent: ScheduleAccent = .blue) {
         let cal = Calendar.current
         let timeFmt = DateFormatter()
-        timeFmt.locale = Locale(identifier: "ja_JP")
-        timeFmt.dateFormat = "HH:mm"
+        timeFmt.locale = Locale.current
+        timeFmt.setLocalizedDateFormatFromTemplate("HHmm")
 
         let startTime = event.isAllDay ? "" : timeFmt.string(from: event.startDate)
         let hour = cal.component(.hour, from: event.startDate)
@@ -130,27 +132,31 @@ extension ScheduleItem {
         var detailParts: [String] = []
         if let loc = event.location, !loc.isEmpty { detailParts.append(loc) }
         if event.isAllDay {
-            detailParts.append("終日")
+            detailParts.append(String(localized: "終日"))
         } else {
             let mins = Int(event.endDate.timeIntervalSince(event.startDate) / 60)
             if mins > 0 {
                 if mins >= 60 {
                     let h = mins / 60
                     let m = mins % 60
-                    detailParts.append(m > 0 ? "\(h)時間\(m)分" : "\(h)時間")
+                    detailParts.append(
+                        m > 0
+                            ? String(localized: "\(h)時間\(m)分")
+                            : String(localized: "\(h)時間")
+                    )
                 } else {
-                    detailParts.append("\(mins)分")
+                    detailParts.append(String(localized: "\(mins)分"))
                 }
             }
         }
-        let detail = detailParts.isEmpty ? "予定" : detailParts.joined(separator: "・")
+        let detail = detailParts.isEmpty ? String(localized: "予定") : detailParts.joined(separator: " ・ ")
 
         let dateFmt = DateFormatter()
-        dateFmt.locale = Locale(identifier: "ja_JP")
-        dateFmt.dateFormat = "M/d（E）"
+        dateFmt.locale = Locale.current
+        dateFmt.setLocalizedDateFormatFromTemplate("MdE")
         var fullDateParts: [String] = [dateFmt.string(from: event.startDate)]
         if event.isAllDay {
-            fullDateParts.append("終日")
+            fullDateParts.append(String(localized: "終日"))
         } else {
             let endTime = timeFmt.string(from: event.endDate)
             fullDateParts.append("\(startTime) – \(endTime)")
@@ -158,7 +164,7 @@ extension ScheduleItem {
         if let loc = event.location, !loc.isEmpty { fullDateParts.append(loc) }
 
         self.init(
-            title: (event.title?.isEmpty == false ? event.title! : "(無題)"),
+            title: (event.title?.isEmpty == false ? event.title! : String(localized: "(無題)")),
             detail: detail,
             time: startTime,
             period: period,

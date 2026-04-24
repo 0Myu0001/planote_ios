@@ -13,12 +13,12 @@ struct HomeView: View {
             VStack(alignment: .leading, spacing: 0) {
                 // Header
                 VStack(alignment: .leading, spacing: 4) {
-                    Text("GOOD MORNING")
+                    Text("Hello")
                         .font(.system(size: 13, weight: .regular))
                         .foregroundStyle(Color.textTertiary)
                         .tracking(0.5)
 
-                    Text("Planote")
+                    Text("Scanote AI")
                         .font(.system(size: 32, weight: .bold, design: .rounded))
                         .foregroundStyle(
                             LinearGradient(

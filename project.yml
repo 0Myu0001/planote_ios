@@ -5,11 +5,13 @@ options:
     iOS: "17.0"
   xcodeVersion: "16.0"
   defaultConfig: Debug
+  developmentLanguage: ja
 
 settings:
   base:
     SWIFT_VERSION: "5.9"
     TARGETED_DEVICE_FAMILY: "1"
+    SWIFT_EMIT_LOC_STRINGS: YES
 
 targets:
   Planote:
@@ -19,9 +21,12 @@ targets:
       - path: Planote
         excludes:
           - "Preview Content"
+          - "Resources"
     resources:
       - path: Planote/Assets.xcassets
       - path: Planote/Preview Content
+      - path: Planote/Resources/Localizable.xcstrings
+      - path: Planote/Resources/InfoPlist.xcstrings
     dependencies:
       - target: PlanoteShare
     entitlements:
@@ -35,6 +40,13 @@ targets:
         CFBundleDisplayName: Planote
         CFBundleShortVersionString: $(MARKETING_VERSION)
         CFBundleVersion: $(CURRENT_PROJECT_VERSION)
+        CFBundleDevelopmentRegion: ja
+        CFBundleLocalizations:
+          - ja
+          - en
+          - zh-Hans
+          - zh-Hant
+          - ko
         LSRequiresIPhoneOS: true
         UILaunchScreen:
           UIColorName: ""
@@ -67,6 +79,11 @@ targets:
     platform: iOS
     sources:
       - path: PlanoteShare
+        excludes:
+          - "Resources"
+    resources:
+      - path: PlanoteShare/Resources/Localizable.xcstrings
+      - path: PlanoteShare/Resources/InfoPlist.xcstrings
     entitlements:
       path: PlanoteShare/PlanoteShare.entitlements
       properties:
@@ -78,6 +95,13 @@ targets:
         CFBundleDisplayName: Planoteに送信
         CFBundleShortVersionString: $(MARKETING_VERSION)
         CFBundleVersion: $(CURRENT_PROJECT_VERSION)
+        CFBundleDevelopmentRegion: ja
+        CFBundleLocalizations:
+          - ja
+          - en
+          - zh-Hans
+          - zh-Hant
+          - ko
         NSExtension:
           NSExtensionPointIdentifier: com.apple.share-services
           NSExtensionPrincipalClass: $(PRODUCT_MODULE_NAME).ShareViewController

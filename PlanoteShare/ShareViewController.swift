@@ -19,7 +19,7 @@ class ShareViewController: UIViewController {
         view.addSubview(activityIndicator)
 
         statusLabel.translatesAutoresizingMaskIntoConstraints = false
-        statusLabel.text = "Planoteに送信中…"
+        statusLabel.text = NSLocalizedString("Planoteに送信中…", comment: "")
         statusLabel.textAlignment = .center
         statusLabel.font = .systemFont(ofSize: 15, weight: .medium)
         statusLabel.textColor = .label
@@ -140,7 +140,7 @@ class ShareViewController: UIViewController {
 
     @MainActor
     private func fail() async {
-        statusLabel.text = "送信できませんでした"
+        statusLabel.text = NSLocalizedString("送信できませんでした", comment: "")
         activityIndicator.stopAnimating()
         try? await Task.sleep(nanoseconds: 800_000_000)
         extensionContext?.cancelRequest(withError: NSError(domain: "PlanoteShare", code: -1))

@@ -64,8 +64,8 @@
 		953CE4F021178A076180CAD6 /* ReviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewView.swift; sourceTree = "<group>"; };
 		968DC1AEF8269F45FB5F91CB /* ShareViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareViewController.swift; sourceTree = "<group>"; };
 		A4505414263CA76E374362A4 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		B4CA4AE02D1FD7480B7DD4B7 /* Planote.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Planote.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		C608A305BA7B18B32A44B9C8 /* PlanoteShare.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = PlanoteShare.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		B4CA4AE02D1FD7480B7DD4B7 /* Planote.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = Planote.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		C608A305BA7B18B32A44B9C8 /* PlanoteShare.appex */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = "wrapper.app-extension"; path = PlanoteShare.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		C813DE015DA19DD21DC2C6D8 /* APIModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIModels.swift; sourceTree = "<group>"; };
 		CA7298EEC2CB1ED5575A05D3 /* CalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarView.swift; sourceTree = "<group>"; };
 		ECEC3F583D26E5B92EBC2B9D /* PlanoteAPIClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanoteAPIClient.swift; sourceTree = "<group>"; };
@@ -218,13 +218,15 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = YES;
 				LastUpgradeCheck = 1600;
+				TargetAttributes = {
+				};
 			};
 			buildConfigurationList = A119CE99D17D944933A5D975 /* Build configuration list for PBXProject "Planote" */;
-			developmentRegion = en;
+			developmentRegion = ja;
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				Base,
-				en,
+				ja,
 			);
 			mainGroup = 62DA2D06A079FBB44F3425BB;
 			minimizedProjectReferenceProxies = 1;
@@ -294,7 +296,6 @@
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = PlanoteShare/PlanoteShare.entitlements;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 8D3QB4UCUR;
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = PlanoteShare/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -328,9 +329,7 @@
 				MARKETING_VERSION = 1.0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.planote.app;
 				SDKROOT = iphoneos;
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
-				SUPPORTS_MACCATALYST = NO;
-				TARGETED_DEVICE_FAMILY = 1;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
@@ -405,6 +404,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				SWIFT_VERSION = 5.9;
 				TARGETED_DEVICE_FAMILY = 1;
@@ -420,7 +420,6 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Planote/Preview Content\"";
-				DEVELOPMENT_TEAM = 8D3QB4UCUR;
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = Planote/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -430,9 +429,7 @@
 				MARKETING_VERSION = 1.0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.planote.app;
 				SDKROOT = iphoneos;
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
-				SUPPORTS_MACCATALYST = NO;
-				TARGETED_DEVICE_FAMILY = 1;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};
@@ -494,6 +491,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.9;
 				TARGETED_DEVICE_FAMILY = 1;

@@ -1,0 +1,22 @@
+{
+  "sourceLanguage" : "ja",
+  "version" : "1.0",
+  "strings" : {
+    "Planoteに送信中…" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Sending to Planote…" } },
+        "ko" : { "stringUnit" : { "state" : "translated", "value" : "Planote로 보내는 중…" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "正在发送到 Planote…" } },
+        "zh-Hant" : { "stringUnit" : { "state" : "translated", "value" : "正在傳送至 Planote…" } }
+      }
+    },
+    "送信できませんでした" : {
+      "localizations" : {
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Couldn't send" } },
+        "ko" : { "stringUnit" : { "state" : "translated", "value" : "보낼 수 없습니다" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "发送失败" } },
+        "zh-Hant" : { "stringUnit" : { "state" : "translated", "value" : "傳送失敗" } }
+      }
+    }
+  }
+}
