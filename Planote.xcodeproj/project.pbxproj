@@ -9,8 +9,10 @@
 /* Begin PBXBuildFile section */
 		188BB691B496EC9D0DE7D495 /* CalendarService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53400360A2B288AE7121E137 /* CalendarService.swift */; };
 		18B68921319D2AD89748C74B /* PlanoteApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 877377DE8FCE5D9A85636378 /* PlanoteApp.swift */; };
+		15B8E9C653E2420FAAD0469F /* InfoPlist.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 696256DBB33746B3897C565F /* InfoPlist.xcstrings */; };
 		3D2D3905529A87AAB60BD6CA /* PlanoteAPIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECEC3F583D26E5B92EBC2B9D /* PlanoteAPIClient.swift */; };
 		3DDAED37C9D02822DD442687 /* ScheduleItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92E7736F66CD281DBBD3DD6F /* ScheduleItem.swift */; };
+		41A97D6DA1784FD583579BD8 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = B4F4B63A98D3432A9958697B /* Localizable.xcstrings */; };
 		5283149131FF794D4629741B /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 306507351E5D168AD91C0DC1 /* HomeView.swift */; };
 		60D826C3D9A3DC96EC1099B5 /* APIModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = C813DE015DA19DD21DC2C6D8 /* APIModels.swift */; };
 		653EE0CF81DA700077AEBF7F /* PlanoteShare.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = C608A305BA7B18B32A44B9C8 /* PlanoteShare.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
@@ -18,9 +20,11 @@
 		98AC763D7621BF0BDC3189AF /* ScanView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BB5655E8B60BB8C7EC1DA0F /* ScanView.swift */; };
 		B1E33C0E5686E27E8C9141C9 /* Components.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E340AD323ADFDAF3816F19E /* Components.swift */; };
 		D677B13EC0DDB63A4F6CD8AD /* ReviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 953CE4F021178A076180CAD6 /* ReviewView.swift */; };
+		DE8D232B8126455482620595 /* InfoPlist.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 0A70C96A4C294B8C99033FFC /* InfoPlist.xcstrings */; };
 		DCB5E7EEF574D8C592F1B29D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A4505414263CA76E374362A4 /* Assets.xcassets */; };
 		E808734AB5D47B99BC726F46 /* CalendarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA7298EEC2CB1ED5575A05D3 /* CalendarView.swift */; };
 		E8ED51B4C40BF5B19EF0EA37 /* PlanoteTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A8AFB4BDDB9EFDC92A11EC4 /* PlanoteTheme.swift */; };
+		F483261C6AC8435A9A1D7836 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = E6F5801C192D4950B776069A /* Localizable.xcstrings */; };
 		FFFB4DE5F848830BDE4F7577 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 426DE661D8374CBB90445835 /* ContentView.swift */; };
 /* End PBXBuildFile section */
 
@@ -56,6 +60,7 @@
 		426DE661D8374CBB90445835 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		53400360A2B288AE7121E137 /* CalendarService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarService.swift; sourceTree = "<group>"; };
 		5509075BCC2BB62DC64A27DD /* PlanoteShare.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = PlanoteShare.entitlements; sourceTree = "<group>"; };
+		696256DBB33746B3897C565F /* InfoPlist.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = InfoPlist.xcstrings; sourceTree = "<group>"; };
 		69A8C5E23BC8ECCE920BD49D /* Planote.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Planote.entitlements; sourceTree = "<group>"; };
 		877377DE8FCE5D9A85636378 /* PlanoteApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanoteApp.swift; sourceTree = "<group>"; };
 		8A8AFB4BDDB9EFDC92A11EC4 /* PlanoteTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanoteTheme.swift; sourceTree = "<group>"; };
@@ -63,11 +68,14 @@
 		92E7736F66CD281DBBD3DD6F /* ScheduleItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleItem.swift; sourceTree = "<group>"; };
 		953CE4F021178A076180CAD6 /* ReviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewView.swift; sourceTree = "<group>"; };
 		968DC1AEF8269F45FB5F91CB /* ShareViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareViewController.swift; sourceTree = "<group>"; };
+		0A70C96A4C294B8C99033FFC /* InfoPlist.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = InfoPlist.xcstrings; sourceTree = "<group>"; };
 		A4505414263CA76E374362A4 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		B4F4B63A98D3432A9958697B /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
 		B4CA4AE02D1FD7480B7DD4B7 /* Planote.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = Planote.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C608A305BA7B18B32A44B9C8 /* PlanoteShare.appex */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = "wrapper.app-extension"; path = PlanoteShare.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		C813DE015DA19DD21DC2C6D8 /* APIModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIModels.swift; sourceTree = "<group>"; };
 		CA7298EEC2CB1ED5575A05D3 /* CalendarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarView.swift; sourceTree = "<group>"; };
+		E6F5801C192D4950B776069A /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
 		ECEC3F583D26E5B92EBC2B9D /* PlanoteAPIClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanoteAPIClient.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -125,11 +133,21 @@
 				B0B0B89824F3CC59CC9453E5 /* App */,
 				F57CDBA1C1907C339A5A6676 /* Components */,
 				66AA1CB1EF794D1A36CB5761 /* Models */,
+				A923DB856DA44BB59BFD9E35 /* Resources */,
 				73D5B2B78E5477E30481FF62 /* Services */,
 				5AEAA81BCF5814AF86170B6A /* Theme */,
 				A252005F2821E1778B2CA0B3 /* Views */,
 			);
 			path = Planote;
+			sourceTree = "<group>";
+		};
+		A923DB856DA44BB59BFD9E35 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				0A70C96A4C294B8C99033FFC /* InfoPlist.xcstrings */,
+				E6F5801C192D4950B776069A /* Localizable.xcstrings */,
+			);
+			path = Resources;
 			sourceTree = "<group>";
 		};
 		A252005F2821E1778B2CA0B3 /* Views */ = {
@@ -157,9 +175,19 @@
 			children = (
 				1336854DD28B48DE3911DDEB /* Info.plist */,
 				5509075BCC2BB62DC64A27DD /* PlanoteShare.entitlements */,
+				394201B023D84A728B020E08 /* Resources */,
 				968DC1AEF8269F45FB5F91CB /* ShareViewController.swift */,
 			);
 			path = PlanoteShare;
+			sourceTree = "<group>";
+		};
+		394201B023D84A728B020E08 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				696256DBB33746B3897C565F /* InfoPlist.xcstrings */,
+				B4F4B63A98D3432A9958697B /* Localizable.xcstrings */,
+			);
+			path = Resources;
 			sourceTree = "<group>";
 		};
 		F57CDBA1C1907C339A5A6676 /* Components */ = {
@@ -178,6 +206,7 @@
 			buildConfigurationList = 0EEB22DBA33737D21085EC73 /* Build configuration list for PBXNativeTarget "PlanoteShare" */;
 			buildPhases = (
 				E79A1782409D06B71A8F0098 /* Sources */,
+				F7447FDECF6E417A92697CC0 /* Resources */,
 			);
 			buildRules = (
 			);
@@ -227,6 +256,10 @@
 			knownRegions = (
 				Base,
 				ja,
+				en,
+				zh-Hans,
+				zh-Hant,
+				ko,
 			);
 			mainGroup = 62DA2D06A079FBB44F3425BB;
 			minimizedProjectReferenceProxies = 1;
@@ -247,6 +280,17 @@
 			buildActionMask = 2147483647;
 			files = (
 				DCB5E7EEF574D8C592F1B29D /* Assets.xcassets in Resources */,
+				DE8D232B8126455482620595 /* InfoPlist.xcstrings in Resources */,
+				F483261C6AC8435A9A1D7836 /* Localizable.xcstrings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F7447FDECF6E417A92697CC0 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				15B8E9C653E2420FAAD0469F /* InfoPlist.xcstrings in Resources */,
+				41A97D6DA1784FD583579BD8 /* Localizable.xcstrings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

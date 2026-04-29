@@ -1,42 +1,158 @@
 {
   "sourceLanguage" : "ja",
-  "version" : "1.0",
   "strings" : {
-    "NSCalendarsFullAccessUsageDescription" : {
+    "CFBundleDisplayName" : {
+      "comment" : "Bundle display name",
       "localizations" : {
-        "ja" : { "stringUnit" : { "state" : "translated", "value" : "手書きメモから抽出した予定をカレンダーに追加するために使用します" } },
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Used to add events extracted from handwritten notes to your calendar." } },
-        "ko" : { "stringUnit" : { "state" : "translated", "value" : "손글씨 메모에서 추출한 일정을 캘린더에 추가하는 데 사용됩니다." } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "用于将从手写笔记中提取的日程添加到日历。" } },
-        "zh-Hant" : { "stringUnit" : { "state" : "translated", "value" : "用於將從手寫筆記中擷取的行程加入日曆。" } }
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Planote"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Planote"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Planote"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Planote"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Planote"
+          }
+        }
+      }
+    },
+    "CFBundleName" : {
+      "comment" : "Bundle name",
+      "extractionState" : "extracted_with_value",
+      "localizations" : {
+        "ja" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Planote"
+          }
+        }
+      }
+    },
+    "NSCalendarsFullAccessUsageDescription" : {
+      "comment" : "Privacy - Calendars Full Access Usage Description",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Used to add events extracted from handwritten notes to your calendar."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "手書きメモから抽出した予定をカレンダーに追加するために使用します"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "손글씨 메모에서 추출한 일정을 캘린더에 추가하는 데 사용됩니다."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "用于将从手写笔记中提取的日程添加到日历。"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "用於將從手寫筆記中擷取的行程加入日曆。"
+          }
+        }
       }
     },
     "NSCameraUsageDescription" : {
+      "comment" : "Privacy - Camera Usage Description",
       "localizations" : {
-        "ja" : { "stringUnit" : { "state" : "translated", "value" : "手書きメモを撮影してスケジュールを抽出するために使用します" } },
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Used to capture handwritten notes and extract your schedule." } },
-        "ko" : { "stringUnit" : { "state" : "translated", "value" : "손글씨 메모를 촬영하여 일정을 추출하는 데 사용됩니다." } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "用于拍摄手写笔记以提取日程。" } },
-        "zh-Hant" : { "stringUnit" : { "state" : "translated", "value" : "用於拍攝手寫筆記以擷取行程。" } }
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Used to capture handwritten notes and extract your schedule."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "手書きメモを撮影してスケジュールを抽出するために使用します"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "손글씨 메모를 촬영하여 일정을 추출하는 데 사용됩니다."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "用于拍摄手写笔记以提取日程。"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "用於拍攝手寫筆記以擷取行程。"
+          }
+        }
       }
     },
     "NSPhotoLibraryUsageDescription" : {
+      "comment" : "Privacy - Photo Library Usage Description",
       "localizations" : {
-        "ja" : { "stringUnit" : { "state" : "translated", "value" : "手書きメモの写真を選択してスケジュールを抽出するために使用します" } },
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Used to choose photos of handwritten notes and extract your schedule." } },
-        "ko" : { "stringUnit" : { "state" : "translated", "value" : "손글씨 메모 사진을 선택하여 일정을 추출하는 데 사용됩니다." } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "用于选择手写笔记照片以提取日程。" } },
-        "zh-Hant" : { "stringUnit" : { "state" : "translated", "value" : "用於選擇手寫筆記照片以擷取行程。" } }
-      }
-    },
-    "CFBundleDisplayName" : {
-      "localizations" : {
-        "ja" : { "stringUnit" : { "state" : "translated", "value" : "Planote" } },
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Planote" } },
-        "ko" : { "stringUnit" : { "state" : "translated", "value" : "Planote" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "Planote" } },
-        "zh-Hant" : { "stringUnit" : { "state" : "translated", "value" : "Planote" } }
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Used to choose photos of handwritten notes and extract your schedule."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "手書きメモの写真を選択してスケジュールを抽出するために使用します"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "손글씨 메모 사진을 선택하여 일정을 추출하는 데 사용됩니다."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "用于选择手写笔记照片以提取日程。"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "用於選擇手寫筆記照片以擷取行程。"
+          }
+        }
       }
     }
-  }
+  },
+  "version" : "1.0"
 }

@@ -115,27 +115,20 @@ class ShareViewController: UIViewController {
             return
         }
 
-        // 第一候補: NSExtensionContext.open(_:completionHandler:)
-        let openedByContext: Bool = await withCheckedContinuation { continuation in
-            guard let ctx = extensionContext else {
-                continuation.resume(returning: false)
-                return
-            }
-            ctx.open(url) { success in
-                continuation.resume(returning: success)
-            }
+        guard let extensionContext else {
+            await fail()
+            return
         }
 
-        // 第二候補: responder chain 上で openURL: に応答する最初の UIResponder を叩く。
-        // iOS 18 では share extension 内に UIApplication が露出しないことがあるため、
-        // 型キャストせず selector 応答だけで判定する。
-        if !openedByContext {
-            launchHostApp(url: url)
+        extensionContext.completeRequest(returningItems: nil) { [weak self] _ in
+            if Thread.isMainThread {
+                self?.launchHostApp(url: url)
+            } else {
+                DispatchQueue.main.async {
+                    self?.launchHostApp(url: url)
+                }
+            }
         }
-
-        // URL オープンの発火を iOS に処理させるための猶予。
-        try? await Task.sleep(nanoseconds: 600_000_000)
-        extensionContext?.completeRequest(returningItems: nil, completionHandler: nil)
     }
 
     @MainActor
@@ -146,18 +139,26 @@ class ShareViewController: UIViewController {
         extensionContext?.cancelRequest(withError: NSError(domain: "PlanoteShare", code: -1))
     }
 
-    /// Responder chain を遡って `openURL:` に応答する最初の responder を探し、
-    /// deprecated セレクタ経由で host app を起動する。iOS 18 では share extension 内で
-    /// UIApplication が responder chain に現れない場合があるため、型キャストはしない。
+    /// Share Extension の完了後に responder chain を遡って `openURL:` に応答する
+    /// 最初の responder を探し、host app を起動する。
     private func launchHostApp(url: URL) {
         let selector = NSSelectorFromString("openURL:")
-        var responder: UIResponder? = self.next
-        while let current = responder {
-            if current.responds(to: selector) {
-                _ = current.perform(selector, with: url)
-                return
+        let startingResponders: [UIResponder?] = [self, view, view.window]
+        var visited = Set<ObjectIdentifier>()
+
+        for start in startingResponders {
+            var responder = start
+            while let current = responder {
+                let id = ObjectIdentifier(current)
+                guard !visited.contains(id) else { break }
+                visited.insert(id)
+
+                if current.responds(to: selector) {
+                    _ = current.perform(selector, with: url)
+                    return
+                }
+                responder = current.next
             }
-            responder = current.next
         }
     }
 }
