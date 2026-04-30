@@ -5,13 +5,11 @@ import SwiftUI
 enum PlanoteTab: String, CaseIterable {
     case home
     case scan
-    case calendar
 
     var titleKey: LocalizedStringKey {
         switch self {
         case .home: return "ホーム"
         case .scan: return "スキャン"
-        case .calendar: return "カレンダー"
         }
     }
 
@@ -19,7 +17,6 @@ enum PlanoteTab: String, CaseIterable {
         switch self {
         case .home: return "house.fill"
         case .scan: return "qrcode.viewfinder"
-        case .calendar: return "calendar"
         }
     }
 }
@@ -45,7 +42,7 @@ struct ContentView: View {
             TabView(selection: $selectedTab) {
                 HomeView(
                     onScan: { selectedTab = .scan },
-                    onCalendar: { selectedTab = .calendar }
+                    onCalendar: { openDeviceCalendar() }
                 )
                 .tabItem {
                     Label(PlanoteTab.home.titleKey, systemImage: PlanoteTab.home.icon)
@@ -62,12 +59,6 @@ struct ContentView: View {
                     Label(PlanoteTab.scan.titleKey, systemImage: PlanoteTab.scan.icon)
                 }
                 .tag(PlanoteTab.scan)
-
-                CalendarView(onBack: { selectedTab = .home })
-                    .tabItem {
-                        Label(PlanoteTab.calendar.titleKey, systemImage: PlanoteTab.calendar.icon)
-                    }
-                    .tag(PlanoteTab.calendar)
             }
 
             // Toast
@@ -92,7 +83,8 @@ struct ContentView: View {
                     withAnimation { showToast = true }
                     DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
                         withAnimation { showToast = false }
-                        selectedTab = .calendar
+                        selectedTab = .home
+                        openDeviceCalendar()
                     }
                 }
             )
@@ -108,6 +100,12 @@ struct ContentView: View {
         .task {
             consumePendingShare()
         }
+    }
+
+    /// デバイスのカレンダーアプリを開く
+    private func openDeviceCalendar() {
+        guard let url = URL(string: "calshow://") else { return }
+        UIApplication.shared.open(url)
     }
 
     /// Share Extension が App Group に書き込んだ画像があれば、最新の1件を取り出して
