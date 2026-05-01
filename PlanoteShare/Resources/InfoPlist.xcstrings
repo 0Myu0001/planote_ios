@@ -7,31 +7,31 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Send to Planote"
+            "value" : "Send to Scanote AI"
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Planoteに送信"
+            "value" : "Scanote AIに送信"
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Planote로 보내기"
+            "value" : "Scanote AI로 보내기"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "发送到 Planote"
+            "value" : "发送到 Scanote AI"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "傳送至 Planote"
+            "value" : "傳送至 Scanote AI"
           }
         }
       }

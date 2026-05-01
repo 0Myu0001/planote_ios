@@ -37,7 +37,7 @@ targets:
     info:
       path: Planote/Info.plist
       properties:
-        CFBundleDisplayName: Planote
+        CFBundleDisplayName: Scanote AI
         CFBundleShortVersionString: $(MARKETING_VERSION)
         CFBundleVersion: $(CURRENT_PROJECT_VERSION)
         CFBundleDevelopmentRegion: ja
@@ -92,7 +92,7 @@ targets:
     info:
       path: PlanoteShare/Info.plist
       properties:
-        CFBundleDisplayName: Planoteに送信
+        CFBundleDisplayName: Scanote AIに送信
         CFBundleShortVersionString: $(MARKETING_VERSION)
         CFBundleVersion: $(CURRENT_PROJECT_VERSION)
         CFBundleDevelopmentRegion: ja

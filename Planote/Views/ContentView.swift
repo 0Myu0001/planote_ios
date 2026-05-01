@@ -78,13 +78,13 @@ struct ContentView: View {
                 onBack: {
                     scanItem = nil
                 },
-                onAdd: {
+                onAdd: { firstDate in
                     scanItem = nil
                     withAnimation { showToast = true }
                     DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
                         withAnimation { showToast = false }
                         selectedTab = .home
-                        openDeviceCalendar()
+                        openDeviceCalendar(at: firstDate)
                     }
                 }
             )
@@ -102,9 +102,16 @@ struct ContentView: View {
         }
     }
 
-    /// デバイスのカレンダーアプリを開く
-    private func openDeviceCalendar() {
-        guard let url = URL(string: "calshow://") else { return }
+    /// デバイスのカレンダーアプリを開く。日付指定があればその日付にジャンプ。
+    private func openDeviceCalendar(at date: Date? = nil) {
+        let urlString: String
+        if let date {
+            // calshow:<seconds since 2001-01-01> でその日付の日表示にジャンプ
+            urlString = "calshow:\(date.timeIntervalSinceReferenceDate)"
+        } else {
+            urlString = "calshow://"
+        }
+        guard let url = URL(string: urlString) else { return }
         UIApplication.shared.open(url)
     }
 

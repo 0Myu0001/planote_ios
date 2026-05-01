@@ -13,7 +13,8 @@ actor CalendarService {
         }
     }
 
-    func addEvent(from candidate: ExtractionCandidate) -> Bool {
+    /// イベントを追加。成功時は開始日を返す（カレンダーアプリのジャンプ先に使用）。
+    func addEvent(from candidate: ExtractionCandidate) -> Date? {
         let event = EKEvent(eventStore: store)
         event.title = candidate.title
         event.notes = candidate.description
@@ -30,7 +31,7 @@ actor CalendarService {
             // start_time は "HH:mm:ss" または "HH:mm" の両方に対応
             let normalizedStart = normalizeTime(startStr)
             dateFmt.dateFormat = "yyyy-MM-dd HH:mm:ss"
-            guard let startDate = dateFmt.date(from: "\(dateStr) \(normalizedStart)") else { return false }
+            guard let startDate = dateFmt.date(from: "\(dateStr) \(normalizedStart)") else { return nil }
             event.startDate = startDate
 
             if let endStr = candidate.end_time {
@@ -45,20 +46,20 @@ actor CalendarService {
             }
         } else if let dateStr = candidate.date {
             dateFmt.dateFormat = "yyyy-MM-dd"
-            guard let dayDate = dateFmt.date(from: dateStr) else { return false }
+            guard let dayDate = dateFmt.date(from: dateStr) else { return nil }
             event.startDate = dayDate
             event.endDate = dayDate
             event.isAllDay = true
         } else {
-            return false
+            return nil
         }
 
         do {
             try store.save(event, span: .thisEvent)
-            return true
+            return event.startDate
         } catch {
             print("CalendarService save error: \(error.localizedDescription)")
-            return false
+            return nil
         }
     }
 
