@@ -11,7 +11,7 @@ enum ReviewState {
 struct ReviewView: View {
     let scannedImage: UIImage?
     let onBack: () -> Void
-    let onAdd: () -> Void
+    let onAdd: (Date?) -> Void
     @State private var reviewState: ReviewState = .loading
     @State private var items: [ScheduleItem] = []
     @State private var noteId: String = ""
@@ -308,7 +308,7 @@ struct ReviewView: View {
     private func confirmSelectedCandidates() {
         let selectedIds = items.filter(\.isSelected).compactMap(\.candidateId)
         guard !selectedIds.isEmpty else {
-            onAdd()
+            onAdd(nil)
             return
         }
 
@@ -317,11 +317,14 @@ struct ReviewView: View {
         Task {
             // Write to device calendar
             let granted = await CalendarService.shared.requestAccess()
+            var firstAddedDate: Date? = nil
             if granted {
                 var successCount = 0
                 for candidate in selectedCandidates {
-                    let ok = await CalendarService.shared.addEvent(from: candidate)
-                    if ok { successCount += 1 }
+                    if let addedDate = await CalendarService.shared.addEvent(from: candidate) {
+                        successCount += 1
+                        if firstAddedDate == nil { firstAddedDate = addedDate }
+                    }
                 }
                 let total = selectedCandidates.count
                 await MainActor.run {
@@ -355,12 +358,12 @@ struct ReviewView: View {
 
             try? await Task.sleep(nanoseconds: 1_500_000_000)
             await MainActor.run {
-                onAdd()
+                onAdd(firstAddedDate)
             }
         }
     }
 }
 
 #Preview {
-    ReviewView(scannedImage: nil, onBack: {}, onAdd: {})
+    ReviewView(scannedImage: nil, onBack: {}, onAdd: { _ in })
 }
