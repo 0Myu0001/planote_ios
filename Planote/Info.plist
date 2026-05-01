@@ -26,6 +26,8 @@
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
 	<string>$(MARKETING_VERSION)</string>
+	<key>GIDClientID</key>
+	<string>709346610161-nm8cvnhg949ca763fknuoh3gtvjn60lc.apps.googleusercontent.com</string>
 	<key>CFBundleURLTypes</key>
 	<array>
 		<dict>
@@ -34,6 +36,14 @@
 			<key>CFBundleURLSchemes</key>
 			<array>
 				<string>planote</string>
+			</array>
+		</dict>
+		<dict>
+			<key>CFBundleURLName</key>
+			<string>com.planote.app.googlesignin</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>com.googleusercontent.apps.709346610161-nm8cvnhg949ca763fknuoh3gtvjn60lc</string>
 			</array>
 		</dict>
 	</array>

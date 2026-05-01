@@ -18,6 +18,7 @@ struct ReviewView: View {
     @State private var candidates: [ExtractionCandidate] = []
     @State private var calendarResultMessage: String?
     @State private var calendarResultIsError: Bool = false
+    @State private var isAddingToGoogle: Bool = false
     @Environment(\.colorScheme) var colorScheme
 
     private var selectedCount: Int {
@@ -186,43 +187,78 @@ struct ReviewView: View {
             }
 
             // Action buttons
-            HStack(spacing: 12) {
-                Button(action: onBack) {
-                    Text("再スキャン")
-                        .font(.system(size: 15, weight: .semibold))
-                        .foregroundStyle(Color.textPrimary)
-                        .frame(maxWidth: .infinity)
-                        .padding(.vertical, 16)
-                        .background {
-                            Capsule()
-                                .fill(.ultraThinMaterial)
-                                .overlay(Capsule().fill(Color.glassBg))
-                                .overlay(Capsule().stroke(Color.glassBorder, lineWidth: 1))
-                        }
+            VStack(spacing: 10) {
+                HStack(spacing: 12) {
+                    Button(action: onBack) {
+                        Text("再スキャン")
+                            .font(.system(size: 15, weight: .semibold))
+                            .foregroundStyle(Color.textPrimary)
+                            .frame(maxWidth: .infinity)
+                            .padding(.vertical, 16)
+                            .background {
+                                Capsule()
+                                    .fill(.ultraThinMaterial)
+                                    .overlay(Capsule().fill(Color.glassBg))
+                                    .overlay(Capsule().stroke(Color.glassBorder, lineWidth: 1))
+                            }
+                    }
+
+                    Button(action: {
+                        confirmSelectedCandidates()
+                    }) {
+                        Text("カレンダーに追加")
+                            .font(.system(size: 15, weight: .semibold))
+                            .foregroundStyle(.white)
+                            .frame(maxWidth: .infinity)
+                            .padding(.vertical, 16)
+                            .background {
+                                Capsule()
+                                    .fill(
+                                        LinearGradient(
+                                            colors: [.bluePrimary, .blueDeep],
+                                            startPoint: .topLeading,
+                                            endPoint: .bottomTrailing
+                                        )
+                                    )
+                                    .shadow(color: Color.bluePrimary.opacity(0.4), radius: 12, y: 4)
+                            }
+                    }
+                    .disabled(selectedCount == 0 || isAddingToGoogle)
+                    .opacity((selectedCount == 0 || isAddingToGoogle) ? 0.5 : 1.0)
                 }
 
                 Button(action: {
-                    confirmSelectedCandidates()
+                    addSelectedToGoogleCalendar()
                 }) {
-                    Text("カレンダーに追加")
-                        .font(.system(size: 15, weight: .semibold))
-                        .foregroundStyle(.white)
-                        .frame(maxWidth: .infinity)
-                        .padding(.vertical, 16)
-                        .background {
-                            Capsule()
-                                .fill(
-                                    LinearGradient(
-                                        colors: [.bluePrimary, .blueDeep],
-                                        startPoint: .topLeading,
-                                        endPoint: .bottomTrailing
-                                    )
-                                )
-                                .shadow(color: Color.bluePrimary.opacity(0.4), radius: 12, y: 4)
+                    HStack(spacing: 8) {
+                        if isAddingToGoogle {
+                            ProgressView()
+                                .controlSize(.small)
+                                .tint(.white)
+                        } else {
+                            Image(systemName: "g.circle.fill")
+                                .font(.system(size: 18))
                         }
+                        Text(isAddingToGoogle ? "追加中…" : "Google カレンダーに追加")
+                            .font(.system(size: 15, weight: .semibold))
+                    }
+                    .foregroundStyle(.white)
+                    .frame(maxWidth: .infinity)
+                    .padding(.vertical, 14)
+                    .background {
+                        Capsule()
+                            .fill(
+                                LinearGradient(
+                                    colors: [Color(hex: 0x4285F4), Color(hex: 0x1A73E8)],
+                                    startPoint: .topLeading,
+                                    endPoint: .bottomTrailing
+                                )
+                            )
+                            .shadow(color: Color(hex: 0x4285F4).opacity(0.35), radius: 10, y: 3)
+                    }
                 }
-                .disabled(selectedCount == 0)
-                .opacity(selectedCount == 0 ? 0.5 : 1.0)
+                .disabled(selectedCount == 0 || isAddingToGoogle)
+                .opacity((selectedCount == 0 || isAddingToGoogle) ? 0.5 : 1.0)
             }
             .buttonStyle(.plain)
             .padding(.horizontal, 20)
@@ -360,6 +396,64 @@ struct ReviewView: View {
             await MainActor.run {
                 onAdd(firstAddedDate)
             }
+        }
+    }
+
+    private func addSelectedToGoogleCalendar() {
+        let selectedIds = items.filter(\.isSelected).compactMap(\.candidateId)
+        guard !selectedIds.isEmpty else { return }
+        let selectedCandidates = candidates.filter { selectedIds.contains($0.candidate_id) }
+
+        isAddingToGoogle = true
+        Task {
+            // 認証 + Calendar スコープ取得
+            do {
+                try await GoogleCalendarService.shared.signIn()
+            } catch {
+                await MainActor.run {
+                    isAddingToGoogle = false
+                    calendarResultIsError = true
+                    calendarResultMessage = error.localizedDescription
+                }
+                try? await Task.sleep(nanoseconds: 2_500_000_000)
+                await MainActor.run { calendarResultMessage = nil }
+                return
+            }
+
+            // 各候補を順次追加
+            var successCount = 0
+            var lastError: Error?
+            for candidate in selectedCandidates {
+                do {
+                    _ = try await GoogleCalendarService.shared.addEvent(from: candidate)
+                    successCount += 1
+                } catch {
+                    lastError = error
+                }
+            }
+
+            let total = selectedCandidates.count
+            await MainActor.run {
+                isAddingToGoogle = false
+                if successCount == total {
+                    calendarResultIsError = false
+                    calendarResultMessage = String(
+                        localized: "Google カレンダーに\(successCount)件追加しました"
+                    )
+                } else if successCount == 0 {
+                    calendarResultIsError = true
+                    calendarResultMessage = lastError?.localizedDescription
+                        ?? String(localized: "Google カレンダーへの追加に失敗しました")
+                } else {
+                    calendarResultIsError = false
+                    calendarResultMessage = String(
+                        localized: "Google カレンダーに\(total)件中\(successCount)件追加しました"
+                    )
+                }
+            }
+
+            try? await Task.sleep(nanoseconds: 2_500_000_000)
+            await MainActor.run { calendarResultMessage = nil }
         }
     }
 }
