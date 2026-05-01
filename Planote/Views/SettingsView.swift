@@ -10,6 +10,7 @@ struct SettingsView: View {
     @State private var isSigningIn = false
     @State private var isSigningInMicrosoft = false
     @State private var errorMessage: String?
+    @Environment(\.scenePhase) private var scenePhase
 
     var body: some View {
         ZStack {
@@ -45,6 +46,18 @@ struct SettingsView: View {
             }
         }
         .animation(.spring(response: 0.4), value: errorMessage)
+        .onAppear { refreshAccounts() }
+        .onChange(of: scenePhase) { _, phase in
+            if phase == .active { refreshAccounts() }
+        }
+        .onReceive(NotificationCenter.default.publisher(for: .googleSignInRestored)) { _ in
+            refreshAccounts()
+        }
+    }
+
+    private func refreshAccounts() {
+        googleEmail = GoogleCalendarService.shared.currentUserEmail
+        microsoftEmail = MicrosoftCalendarService.shared.currentUserEmail
     }
 
     // MARK: - Default Calendar
