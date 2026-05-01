@@ -32,6 +32,7 @@ struct ContentView: View {
     @State private var selectedTab: PlanoteTab = .home
     @State private var showToast = false
     @State private var scanItem: ScanImageItem? = nil
+    @State private var showSettings = false
     @Environment(\.scenePhase) private var scenePhase
 
     private static let appGroupID = "group.com.planote.app"
@@ -42,7 +43,8 @@ struct ContentView: View {
             TabView(selection: $selectedTab) {
                 HomeView(
                     onScan: { selectedTab = .scan },
-                    onCalendar: { openDeviceCalendar() }
+                    onCalendar: { openDeviceCalendar() },
+                    onSettings: { showSettings = true }
                 )
                 .tabItem {
                     Label(PlanoteTab.home.titleKey, systemImage: PlanoteTab.home.icon)
@@ -71,6 +73,9 @@ struct ContentView: View {
                 .transition(.move(edge: .top).combined(with: .opacity))
                 .zIndex(100)
             }
+        }
+        .fullScreenCover(isPresented: $showSettings) {
+            SettingsView(onBack: { showSettings = false })
         }
         .fullScreenCover(item: $scanItem) { item in
             ReviewView(

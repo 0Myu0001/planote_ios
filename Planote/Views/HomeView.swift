@@ -3,6 +3,7 @@ import SwiftUI
 struct HomeView: View {
     let onScan: () -> Void
     let onCalendar: () -> Void
+    let onSettings: () -> Void
 
     @State private var isTodayExpanded = true
     @State private var todayEvents: [ScheduleItem] = []
@@ -40,7 +41,7 @@ struct HomeView: View {
                 HStack(spacing: 12) {
                     QuickActionButton(title: "スキャン", icon: "qrcode.viewfinder", isPrimary: true, action: onScan)
                     QuickActionButton(title: "カレンダー", icon: "calendar", isPrimary: false, action: onCalendar)
-                    QuickActionButton(title: "設定", icon: "gearshape", isPrimary: false, action: {})
+                    QuickActionButton(title: "設定", icon: "gearshape", isPrimary: false, action: onSettings)
                 }
                 .padding(.horizontal, 20)
                 .padding(.bottom, 24)
@@ -87,6 +88,6 @@ struct HomeView: View {
 #Preview {
     ZStack {
         PlanoteBackground()
-        HomeView(onScan: {}, onCalendar: {})
+        HomeView(onScan: {}, onCalendar: {}, onSettings: {})
     }
 }

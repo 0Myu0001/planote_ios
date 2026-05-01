@@ -17,6 +17,9 @@ packages:
   GoogleSignIn:
     url: https://github.com/google/GoogleSignIn-iOS
     from: 7.1.0
+  MSAL:
+    url: https://github.com/AzureAD/microsoft-authentication-library-for-objc
+    from: 1.5.0
 
 targets:
   Planote:
@@ -38,6 +41,8 @@ targets:
         product: GoogleSignIn
       - package: GoogleSignIn
         product: GoogleSignInSwift
+      - package: MSAL
+        product: MSAL
     entitlements:
       path: Planote/Planote.entitlements
       properties:
@@ -77,6 +82,12 @@ targets:
           - CFBundleURLName: com.planote.app.googlesignin
             CFBundleURLSchemes:
               - com.googleusercontent.apps.709346610161-nm8cvnhg949ca763fknuoh3gtvjn60lc
+          - CFBundleURLName: com.planote.app.msal
+            CFBundleURLSchemes:
+              - msauth.com.planote.app
+        LSApplicationQueriesSchemes:
+          - msauthv2
+          - msauthv3
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: com.planote.app
