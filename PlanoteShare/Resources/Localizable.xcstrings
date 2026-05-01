@@ -2,12 +2,12 @@
   "sourceLanguage" : "ja",
   "version" : "1.0",
   "strings" : {
-    "Planoteに送信中…" : {
+    "Scanote AIに送信中…" : {
       "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Sending to Planote…" } },
-        "ko" : { "stringUnit" : { "state" : "translated", "value" : "Planote로 보내는 중…" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "正在发送到 Planote…" } },
-        "zh-Hant" : { "stringUnit" : { "state" : "translated", "value" : "正在傳送至 Planote…" } }
+        "en" : { "stringUnit" : { "state" : "translated", "value" : "Sending to Scanote AI…" } },
+        "ko" : { "stringUnit" : { "state" : "translated", "value" : "Scanote AI로 보내는 중…" } },
+        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "正在发送到 Scanote AI…" } },
+        "zh-Hant" : { "stringUnit" : { "state" : "translated", "value" : "正在傳送至 Scanote AI…" } }
       }
     },
     "送信できませんでした" : {

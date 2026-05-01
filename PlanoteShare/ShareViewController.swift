@@ -19,7 +19,7 @@ class ShareViewController: UIViewController {
         view.addSubview(activityIndicator)
 
         statusLabel.translatesAutoresizingMaskIntoConstraints = false
-        statusLabel.text = NSLocalizedString("Planoteに送信中…", comment: "")
+        statusLabel.text = NSLocalizedString("Scanote AIに送信中…", comment: "")
         statusLabel.textAlignment = .center
         statusLabel.font = .systemFont(ofSize: 15, weight: .medium)
         statusLabel.textColor = .label
