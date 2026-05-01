@@ -7,17 +7,24 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		061E1B2A154645FC2C31B457 /* AppSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8C83CEDCF56C27B0A07DD52 /* AppSettings.swift */; };
+		0A042920DDAEDC1697FBDF5F /* GoogleCalendarService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24B4AB24286FF308D9A40D7F /* GoogleCalendarService.swift */; };
+		17ACF70B118F597469DD1CFC /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEDC17F07449479780C84928 /* SettingsView.swift */; };
 		188BB691B496EC9D0DE7D495 /* CalendarService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53400360A2B288AE7121E137 /* CalendarService.swift */; };
 		18B68921319D2AD89748C74B /* PlanoteApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 877377DE8FCE5D9A85636378 /* PlanoteApp.swift */; };
+		28A9867366D1485C05DB91AE /* MicrosoftCalendarService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 773FD14618A4A0CD2C4796DC /* MicrosoftCalendarService.swift */; };
 		3D2D3905529A87AAB60BD6CA /* PlanoteAPIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECEC3F583D26E5B92EBC2B9D /* PlanoteAPIClient.swift */; };
 		3DDAED37C9D02822DD442687 /* ScheduleItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92E7736F66CD281DBBD3DD6F /* ScheduleItem.swift */; };
 		5283149131FF794D4629741B /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 306507351E5D168AD91C0DC1 /* HomeView.swift */; };
+		55E72B2C1D8A93E7711AB36F /* MSAL in Frameworks */ = {isa = PBXBuildFile; productRef = A1A9746C37521D431AA70378 /* MSAL */; };
 		60D826C3D9A3DC96EC1099B5 /* APIModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = C813DE015DA19DD21DC2C6D8 /* APIModels.swift */; };
 		653EE0CF81DA700077AEBF7F /* PlanoteShare.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = C608A305BA7B18B32A44B9C8 /* PlanoteShare.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		81DFAE8CDD34629932C112BC /* ShareViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 968DC1AEF8269F45FB5F91CB /* ShareViewController.swift */; };
 		98AC763D7621BF0BDC3189AF /* ScanView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BB5655E8B60BB8C7EC1DA0F /* ScanView.swift */; };
 		B1E33C0E5686E27E8C9141C9 /* Components.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E340AD323ADFDAF3816F19E /* Components.swift */; };
+		CB4B5D3932BAFF3A3ED8756A /* GoogleSignInSwift in Frameworks */ = {isa = PBXBuildFile; productRef = D949B7CDE29A7487A0C54E02 /* GoogleSignInSwift */; };
 		D677B13EC0DDB63A4F6CD8AD /* ReviewView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 953CE4F021178A076180CAD6 /* ReviewView.swift */; };
+		D9253CBBC118919C289E07F7 /* GoogleSignIn in Frameworks */ = {isa = PBXBuildFile; productRef = FCEDDB6053670704BD8233C0 /* GoogleSignIn */; };
 		DCB5E7EEF574D8C592F1B29D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A4505414263CA76E374362A4 /* Assets.xcassets */; };
 		E8ED51B4C40BF5B19EF0EA37 /* PlanoteTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A8AFB4BDDB9EFDC92A11EC4 /* PlanoteTheme.swift */; };
 		FFFB4DE5F848830BDE4F7577 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 426DE661D8374CBB90445835 /* ContentView.swift */; };
@@ -50,12 +57,14 @@
 /* Begin PBXFileReference section */
 		069FFB1662CAD2C13EE34C50 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		1336854DD28B48DE3911DDEB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		24B4AB24286FF308D9A40D7F /* GoogleCalendarService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleCalendarService.swift; sourceTree = "<group>"; };
 		306507351E5D168AD91C0DC1 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		3E340AD323ADFDAF3816F19E /* Components.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Components.swift; sourceTree = "<group>"; };
 		426DE661D8374CBB90445835 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		53400360A2B288AE7121E137 /* CalendarService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarService.swift; sourceTree = "<group>"; };
 		5509075BCC2BB62DC64A27DD /* PlanoteShare.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = PlanoteShare.entitlements; sourceTree = "<group>"; };
 		69A8C5E23BC8ECCE920BD49D /* Planote.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Planote.entitlements; sourceTree = "<group>"; };
+		773FD14618A4A0CD2C4796DC /* MicrosoftCalendarService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MicrosoftCalendarService.swift; sourceTree = "<group>"; };
 		877377DE8FCE5D9A85636378 /* PlanoteApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanoteApp.swift; sourceTree = "<group>"; };
 		8A8AFB4BDDB9EFDC92A11EC4 /* PlanoteTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanoteTheme.swift; sourceTree = "<group>"; };
 		8BB5655E8B60BB8C7EC1DA0F /* ScanView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScanView.swift; sourceTree = "<group>"; };
@@ -63,11 +72,26 @@
 		953CE4F021178A076180CAD6 /* ReviewView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewView.swift; sourceTree = "<group>"; };
 		968DC1AEF8269F45FB5F91CB /* ShareViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareViewController.swift; sourceTree = "<group>"; };
 		A4505414263CA76E374362A4 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		B4CA4AE02D1FD7480B7DD4B7 /* Planote.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = Planote.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		C608A305BA7B18B32A44B9C8 /* PlanoteShare.appex */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = "wrapper.app-extension"; path = PlanoteShare.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		B4CA4AE02D1FD7480B7DD4B7 /* Planote.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Planote.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		C608A305BA7B18B32A44B9C8 /* PlanoteShare.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = PlanoteShare.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		C813DE015DA19DD21DC2C6D8 /* APIModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIModels.swift; sourceTree = "<group>"; };
+		D8C83CEDCF56C27B0A07DD52 /* AppSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSettings.swift; sourceTree = "<group>"; };
+		DEDC17F07449479780C84928 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		ECEC3F583D26E5B92EBC2B9D /* PlanoteAPIClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanoteAPIClient.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		0F4E8702201A82FE75D8FBA4 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D9253CBBC118919C289E07F7 /* GoogleSignIn in Frameworks */,
+				CB4B5D3932BAFF3A3ED8756A /* GoogleSignInSwift in Frameworks */,
+				55E72B2C1D8A93E7711AB36F /* MSAL in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
 		5AEAA81BCF5814AF86170B6A /* Theme */ = {
@@ -91,6 +115,7 @@
 			isa = PBXGroup;
 			children = (
 				C813DE015DA19DD21DC2C6D8 /* APIModels.swift */,
+				D8C83CEDCF56C27B0A07DD52 /* AppSettings.swift */,
 				92E7736F66CD281DBBD3DD6F /* ScheduleItem.swift */,
 			);
 			path = Models;
@@ -109,6 +134,8 @@
 			isa = PBXGroup;
 			children = (
 				53400360A2B288AE7121E137 /* CalendarService.swift */,
+				24B4AB24286FF308D9A40D7F /* GoogleCalendarService.swift */,
+				773FD14618A4A0CD2C4796DC /* MicrosoftCalendarService.swift */,
 				ECEC3F583D26E5B92EBC2B9D /* PlanoteAPIClient.swift */,
 			);
 			path = Services;
@@ -137,6 +164,7 @@
 				306507351E5D168AD91C0DC1 /* HomeView.swift */,
 				953CE4F021178A076180CAD6 /* ReviewView.swift */,
 				8BB5655E8B60BB8C7EC1DA0F /* ScanView.swift */,
+				DEDC17F07449479780C84928 /* SettingsView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -193,6 +221,7 @@
 			buildPhases = (
 				D901CC2615650B59920BF8BA /* Sources */,
 				2C67C3AFFC6C6A61CA7D0B83 /* Resources */,
+				0F4E8702201A82FE75D8FBA4 /* Frameworks */,
 				E5E0315489CB45A57E9E3590 /* Embed Foundation Extensions */,
 			);
 			buildRules = (
@@ -202,6 +231,9 @@
 			);
 			name = Planote;
 			packageProductDependencies = (
+				FCEDDB6053670704BD8233C0 /* GoogleSignIn */,
+				D949B7CDE29A7487A0C54E02 /* GoogleSignInSwift */,
+				A1A9746C37521D431AA70378 /* MSAL */,
 			);
 			productName = Planote;
 			productReference = B4CA4AE02D1FD7480B7DD4B7 /* Planote.app */;
@@ -215,8 +247,6 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = YES;
 				LastUpgradeCheck = 1600;
-				TargetAttributes = {
-				};
 			};
 			buildConfigurationList = A119CE99D17D944933A5D975 /* Build configuration list for PBXProject "Planote" */;
 			developmentRegion = ja;
@@ -227,6 +257,10 @@
 			);
 			mainGroup = 62DA2D06A079FBB44F3425BB;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				4E38BCECB84EDB122F330BD7 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */,
+				C21C6BE7F7FCB504EEB94080 /* XCRemoteSwiftPackageReference "microsoft-authentication-library-for-objc" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 6EED11B22A0A2AE5D05EFF57 /* Products */;
 			projectDirPath = "";
@@ -255,16 +289,20 @@
 			buildActionMask = 2147483647;
 			files = (
 				60D826C3D9A3DC96EC1099B5 /* APIModels.swift in Sources */,
+				061E1B2A154645FC2C31B457 /* AppSettings.swift in Sources */,
 				188BB691B496EC9D0DE7D495 /* CalendarService.swift in Sources */,
 				B1E33C0E5686E27E8C9141C9 /* Components.swift in Sources */,
 				FFFB4DE5F848830BDE4F7577 /* ContentView.swift in Sources */,
+				0A042920DDAEDC1697FBDF5F /* GoogleCalendarService.swift in Sources */,
 				5283149131FF794D4629741B /* HomeView.swift in Sources */,
+				28A9867366D1485C05DB91AE /* MicrosoftCalendarService.swift in Sources */,
 				3D2D3905529A87AAB60BD6CA /* PlanoteAPIClient.swift in Sources */,
 				18B68921319D2AD89748C74B /* PlanoteApp.swift in Sources */,
 				E8ED51B4C40BF5B19EF0EA37 /* PlanoteTheme.swift in Sources */,
 				D677B13EC0DDB63A4F6CD8AD /* ReviewView.swift in Sources */,
 				98AC763D7621BF0BDC3189AF /* ScanView.swift in Sources */,
 				3DDAED37C9D02822DD442687 /* ScheduleItem.swift in Sources */,
+				17ACF70B118F597469DD1CFC /* SettingsView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -292,6 +330,7 @@
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = PlanoteShare/PlanoteShare.entitlements;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 8D3QB4UCUR;
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = PlanoteShare/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -299,11 +338,13 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 1.0.0;
+				MARKETING_VERSION = 1.0.2;
 				PRODUCT_BUNDLE_IDENTIFIER = com.planote.app.share;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
@@ -322,10 +363,12 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.0;
+				MARKETING_VERSION = 1.0.2;
 				PRODUCT_BUNDLE_IDENTIFIER = com.planote.app;
 				SDKROOT = iphoneos;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -341,11 +384,13 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 1.0.0;
+				MARKETING_VERSION = 1.0.2;
 				PRODUCT_BUNDLE_IDENTIFIER = com.planote.app.share;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -416,16 +461,19 @@
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Planote/Preview Content\"";
+				DEVELOPMENT_TEAM = 8D3QB4UCUR;
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = Planote/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.0;
+				MARKETING_VERSION = 1.0.2;
 				PRODUCT_BUNDLE_IDENTIFIER = com.planote.app;
 				SDKROOT = iphoneos;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
@@ -525,6 +573,43 @@
 			defaultConfigurationName = Debug;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		4E38BCECB84EDB122F330BD7 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/google/GoogleSignIn-iOS";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 7.1.0;
+			};
+		};
+		C21C6BE7F7FCB504EEB94080 /* XCRemoteSwiftPackageReference "microsoft-authentication-library-for-objc" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/AzureAD/microsoft-authentication-library-for-objc";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.5.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		A1A9746C37521D431AA70378 /* MSAL */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C21C6BE7F7FCB504EEB94080 /* XCRemoteSwiftPackageReference "microsoft-authentication-library-for-objc" */;
+			productName = MSAL;
+		};
+		D949B7CDE29A7487A0C54E02 /* GoogleSignInSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 4E38BCECB84EDB122F330BD7 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */;
+			productName = GoogleSignInSwift;
+		};
+		FCEDDB6053670704BD8233C0 /* GoogleSignIn */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 4E38BCECB84EDB122F330BD7 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */;
+			productName = GoogleSignIn;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = AB4BE2975F31353A260FBE4F /* Project object */;
 }

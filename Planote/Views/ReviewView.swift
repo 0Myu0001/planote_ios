@@ -18,6 +18,8 @@ struct ReviewView: View {
     @State private var candidates: [ExtractionCandidate] = []
     @State private var calendarResultMessage: String?
     @State private var calendarResultIsError: Bool = false
+    @State private var isAdding: Bool = false
+    @ObservedObject private var settings = AppSettings.shared
     @Environment(\.colorScheme) var colorScheme
 
     private var selectedCount: Int {
@@ -201,32 +203,46 @@ struct ReviewView: View {
                         }
                 }
 
-                Button(action: {
-                    confirmSelectedCandidates()
-                }) {
-                    Text("カレンダーに追加")
-                        .font(.system(size: 15, weight: .semibold))
-                        .foregroundStyle(.white)
-                        .frame(maxWidth: .infinity)
-                        .padding(.vertical, 16)
-                        .background {
-                            Capsule()
-                                .fill(
-                                    LinearGradient(
-                                        colors: [.bluePrimary, .blueDeep],
-                                        startPoint: .topLeading,
-                                        endPoint: .bottomTrailing
-                                    )
-                                )
-                                .shadow(color: Color.bluePrimary.opacity(0.4), radius: 12, y: 4)
+                Button(action: { addToDefaultCalendar() }) {
+                    HStack(spacing: 8) {
+                        if isAdding {
+                            ProgressView().controlSize(.small).tint(.white)
+                        } else {
+                            Image(systemName: settings.defaultCalendarProvider.iconName)
+                                .font(.system(size: 16, weight: .semibold))
                         }
+                        Text(isAdding ? "追加中…" : "カレンダーに追加")
+                            .font(.system(size: 15, weight: .semibold))
+                    }
+                    .foregroundStyle(.white)
+                    .frame(maxWidth: .infinity)
+                    .padding(.vertical, 16)
+                    .background {
+                        Capsule()
+                            .fill(
+                                LinearGradient(
+                                    colors: providerGradient,
+                                    startPoint: .topLeading,
+                                    endPoint: .bottomTrailing
+                                )
+                            )
+                            .shadow(color: settings.defaultCalendarProvider.accentColor.opacity(0.4), radius: 12, y: 4)
+                    }
                 }
-                .disabled(selectedCount == 0)
-                .opacity(selectedCount == 0 ? 0.5 : 1.0)
+                .disabled(selectedCount == 0 || isAdding)
+                .opacity((selectedCount == 0 || isAdding) ? 0.5 : 1.0)
             }
             .buttonStyle(.plain)
             .padding(.horizontal, 20)
             .padding(.vertical, 20)
+        }
+    }
+
+    private var providerGradient: [Color] {
+        switch settings.defaultCalendarProvider {
+        case .apple: return [.bluePrimary, .blueDeep]
+        case .google: return [Color(hex: 0x4285F4), Color(hex: 0x1A73E8)]
+        case .outlook: return [Color(hex: 0x0078D4), Color(hex: 0x004B87)]
         }
     }
 
@@ -305,17 +321,28 @@ struct ReviewView: View {
         }
     }
 
-    private func confirmSelectedCandidates() {
+    /// 設定で選ばれているデフォルトカレンダーに予定を追加する。
+    private func addToDefaultCalendar() {
         let selectedIds = items.filter(\.isSelected).compactMap(\.candidateId)
         guard !selectedIds.isEmpty else {
             onAdd(nil)
             return
         }
-
         let selectedCandidates = candidates.filter { selectedIds.contains($0.candidate_id) }
 
+        switch settings.defaultCalendarProvider {
+        case .apple:
+            addToAppleCalendar(selectedCandidates: selectedCandidates, selectedIds: selectedIds)
+        case .google:
+            addToGoogleCalendar(selectedCandidates: selectedCandidates, selectedIds: selectedIds)
+        case .outlook:
+            addToOutlook(selectedCandidates: selectedCandidates, selectedIds: selectedIds)
+        }
+    }
+
+    private func addToAppleCalendar(selectedCandidates: [ExtractionCandidate], selectedIds: [String]) {
+        isAdding = true
         Task {
-            // Write to device calendar
             let granted = await CalendarService.shared.requestAccess()
             var firstAddedDate: Date? = nil
             if granted {
@@ -330,13 +357,9 @@ struct ReviewView: View {
                 await MainActor.run {
                     calendarResultIsError = false
                     if successCount == total {
-                        calendarResultMessage = String(
-                            localized: "\(successCount)件の予定をカレンダーに追加しました"
-                        )
+                        calendarResultMessage = String(localized: "\(successCount)件の予定をカレンダーに追加しました")
                     } else {
-                        calendarResultMessage = String(
-                            localized: "\(total)件中\(successCount)件をカレンダーに追加しました"
-                        )
+                        calendarResultMessage = String(localized: "\(total)件中\(successCount)件をカレンダーに追加しました")
                     }
                 }
             } else {
@@ -346,7 +369,6 @@ struct ReviewView: View {
                 }
             }
 
-            // Confirm via API
             do {
                 _ = try await PlanoteAPIClient.shared.confirmCandidates(
                     noteId: noteId,
@@ -358,7 +380,131 @@ struct ReviewView: View {
 
             try? await Task.sleep(nanoseconds: 1_500_000_000)
             await MainActor.run {
+                isAdding = false
                 onAdd(firstAddedDate)
+            }
+        }
+    }
+
+    private func addToGoogleCalendar(selectedCandidates: [ExtractionCandidate], selectedIds: [String]) {
+        isAdding = true
+        Task {
+            // 認証 + Calendar スコープ取得
+            do {
+                try await GoogleCalendarService.shared.signIn()
+            } catch {
+                await MainActor.run {
+                    isAdding = false
+                    calendarResultIsError = true
+                    calendarResultMessage = error.localizedDescription
+                }
+                try? await Task.sleep(nanoseconds: 2_500_000_000)
+                await MainActor.run { calendarResultMessage = nil }
+                return
+            }
+
+            var successCount = 0
+            var firstAddedDate: Date? = nil
+            var lastError: Error?
+            for candidate in selectedCandidates {
+                do {
+                    let date = try await GoogleCalendarService.shared.addEvent(from: candidate)
+                    successCount += 1
+                    if firstAddedDate == nil { firstAddedDate = date }
+                } catch {
+                    lastError = error
+                }
+            }
+
+            let total = selectedCandidates.count
+            await MainActor.run {
+                if successCount == total {
+                    calendarResultIsError = false
+                    calendarResultMessage = String(localized: "Google カレンダーに\(successCount)件追加しました")
+                } else if successCount == 0 {
+                    calendarResultIsError = true
+                    calendarResultMessage = lastError?.localizedDescription
+                        ?? String(localized: "Google カレンダーへの追加に失敗しました")
+                } else {
+                    calendarResultIsError = false
+                    calendarResultMessage = String(localized: "Google カレンダーに\(total)件中\(successCount)件追加しました")
+                }
+            }
+
+            do {
+                _ = try await PlanoteAPIClient.shared.confirmCandidates(
+                    noteId: noteId,
+                    candidateIds: selectedIds
+                )
+            } catch {
+                print("Confirm error: \(error.localizedDescription)")
+            }
+
+            try? await Task.sleep(nanoseconds: 1_500_000_000)
+            await MainActor.run {
+                isAdding = false
+                // Google 成功時はデバイスカレンダーアプリ起動はスキップ（onAdd に nil 渡す）
+                onAdd(nil)
+            }
+        }
+    }
+
+    private func addToOutlook(selectedCandidates: [ExtractionCandidate], selectedIds: [String]) {
+        isAdding = true
+        Task {
+            // 認証 + スコープ取得
+            do {
+                _ = try await MicrosoftCalendarService.shared.signIn()
+            } catch {
+                await MainActor.run {
+                    isAdding = false
+                    calendarResultIsError = true
+                    calendarResultMessage = error.localizedDescription
+                }
+                try? await Task.sleep(nanoseconds: 2_500_000_000)
+                await MainActor.run { calendarResultMessage = nil }
+                return
+            }
+
+            var successCount = 0
+            var lastError: Error?
+            for candidate in selectedCandidates {
+                do {
+                    _ = try await MicrosoftCalendarService.shared.addEvent(from: candidate)
+                    successCount += 1
+                } catch {
+                    lastError = error
+                }
+            }
+
+            let total = selectedCandidates.count
+            await MainActor.run {
+                if successCount == total {
+                    calendarResultIsError = false
+                    calendarResultMessage = String(localized: "Outlook に\(successCount)件追加しました")
+                } else if successCount == 0 {
+                    calendarResultIsError = true
+                    calendarResultMessage = lastError?.localizedDescription
+                        ?? String(localized: "Outlook への追加に失敗しました")
+                } else {
+                    calendarResultIsError = false
+                    calendarResultMessage = String(localized: "Outlook に\(total)件中\(successCount)件追加しました")
+                }
+            }
+
+            do {
+                _ = try await PlanoteAPIClient.shared.confirmCandidates(
+                    noteId: noteId,
+                    candidateIds: selectedIds
+                )
+            } catch {
+                print("Confirm error: \(error.localizedDescription)")
+            }
+
+            try? await Task.sleep(nanoseconds: 1_500_000_000)
+            await MainActor.run {
+                isAdding = false
+                onAdd(nil)
             }
         }
     }
