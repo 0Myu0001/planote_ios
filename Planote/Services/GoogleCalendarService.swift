@@ -12,6 +12,15 @@ final class GoogleCalendarService {
     private let calendarScope = "https://www.googleapis.com/auth/calendar.events"
     private let eventsEndpoint = "https://www.googleapis.com/calendar/v3/calendars/primary/events"
 
+    /// Google Calendar API 専用セッション。`URLSession.shared` は使用しない。
+    private let session: URLSession = {
+        let config = URLSessionConfiguration.default
+        config.timeoutIntervalForRequest = 30
+        config.timeoutIntervalForResource = 60
+        config.waitsForConnectivity = false
+        return URLSession(configuration: config)
+    }()
+
     private init() {}
 
     // MARK: - Sign In
@@ -88,13 +97,16 @@ final class GoogleCalendarService {
         let (body, startDate) = try makeRequestBody(from: candidate)
         let bodyData = try JSONSerialization.data(withJSONObject: body)
 
-        var req = URLRequest(url: URL(string: eventsEndpoint)!)
+        guard let url = URL(string: eventsEndpoint) else {
+            throw GoogleCalendarError.unexpectedResponse
+        }
+        var req = URLRequest(url: url)
         req.httpMethod = "POST"
         req.setValue("Bearer \(accessToken)", forHTTPHeaderField: "Authorization")
         req.setValue("application/json", forHTTPHeaderField: "Content-Type")
         req.httpBody = bodyData
 
-        let (data, response) = try await URLSession.shared.data(for: req)
+        let (data, response) = try await session.data(for: req)
         guard let http = response as? HTTPURLResponse else {
             throw GoogleCalendarError.unexpectedResponse
         }
@@ -118,7 +130,7 @@ final class GoogleCalendarService {
     /// candidate から Google Calendar API のリクエスト Body と開始日を作る。
     private func makeRequestBody(from candidate: ExtractionCandidate) throws -> ([String: Any], Date) {
         let tzId = candidate.timezone ?? "Asia/Tokyo"
-        let tz = TimeZone(identifier: tzId) ?? TimeZone(identifier: "Asia/Tokyo")!
+        let tz = TimeZone(identifier: tzId) ?? TimeZone(identifier: "Asia/Tokyo") ?? TimeZone.current
 
         let dateFmt = DateFormatter()
         dateFmt.locale = Locale(identifier: "en_US_POSIX")

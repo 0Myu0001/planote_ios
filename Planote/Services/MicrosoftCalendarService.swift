@@ -20,13 +20,25 @@ final class MicrosoftCalendarService {
     private var application: MSALPublicClientApplication?
     private var currentAccount: MSALAccount?
 
+    /// Microsoft Graph 専用セッション。`URLSession.shared` は使用しない。
+    private let session: URLSession = {
+        let config = URLSessionConfiguration.default
+        config.timeoutIntervalForRequest = 30
+        config.timeoutIntervalForResource = 60
+        config.waitsForConnectivity = false
+        return URLSession(configuration: config)
+    }()
+
     private init() {
         configureApplication()
     }
 
     private func configureApplication() {
         do {
-            let authorityURL = URL(string: authority)!
+            guard let authorityURL = URL(string: authority) else {
+                Log.calendar.error("Invalid MSAL authority URL")
+                return
+            }
             let msalAuthority = try MSALAuthority(url: authorityURL)
             let config = MSALPublicClientApplicationConfig(
                 clientId: clientId,
@@ -41,7 +53,7 @@ final class MicrosoftCalendarService {
                 self.currentAccount = accounts.first
             }
         } catch {
-            print("MSAL configure error: \(error.localizedDescription)")
+            Log.calendar.error("MSAL configure error: \(error.localizedDescription, privacy: .private)")
         }
     }
 
@@ -140,13 +152,16 @@ final class MicrosoftCalendarService {
         let (body, startDate) = try makeRequestBody(from: candidate)
         let bodyData = try JSONSerialization.data(withJSONObject: body)
 
-        var req = URLRequest(url: URL(string: eventsEndpoint)!)
+        guard let url = URL(string: eventsEndpoint) else {
+            throw MicrosoftCalendarError.unexpectedResponse
+        }
+        var req = URLRequest(url: url)
         req.httpMethod = "POST"
         req.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
         req.setValue("application/json", forHTTPHeaderField: "Content-Type")
         req.httpBody = bodyData
 
-        let (data, response) = try await URLSession.shared.data(for: req)
+        let (data, response) = try await session.data(for: req)
         guard let http = response as? HTTPURLResponse else {
             throw MicrosoftCalendarError.unexpectedResponse
         }
@@ -160,7 +175,7 @@ final class MicrosoftCalendarService {
     /// candidate から Microsoft Graph リクエスト Body と開始日を構築。
     private func makeRequestBody(from candidate: ExtractionCandidate) throws -> ([String: Any], Date) {
         let tzId = candidate.timezone ?? "Asia/Tokyo"
-        let tz = TimeZone(identifier: tzId) ?? TimeZone(identifier: "Asia/Tokyo")!
+        let tz = TimeZone(identifier: tzId) ?? TimeZone(identifier: "Asia/Tokyo") ?? TimeZone.current
 
         let dateFmt = DateFormatter()
         dateFmt.locale = Locale(identifier: "en_US_POSIX")

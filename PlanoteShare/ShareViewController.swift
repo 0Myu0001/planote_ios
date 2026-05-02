@@ -100,11 +100,18 @@ class ShareViewController: UIViewController {
         ) else { return nil }
         let id = UUID().uuidString
         let fileURL = containerURL.appendingPathComponent("shared-\(id).jpg")
+        // まず最強の保護で書き込みを試行
         do {
-            try data.write(to: fileURL, options: .atomic)
+            try data.write(to: fileURL, options: [.atomic, .completeFileProtection])
             return id
         } catch {
-            return nil
+            // ロック中は書けないことがあるので、Open 中保持される弱めの保護にフォールバック
+            do {
+                try data.write(to: fileURL, options: [.atomic, .completeFileProtectionUnlessOpen])
+                return id
+            } catch {
+                return nil
+            }
         }
     }
 

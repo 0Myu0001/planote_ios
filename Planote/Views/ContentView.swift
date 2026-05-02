@@ -151,7 +151,11 @@ struct ContentView: View {
                let image = UIImage(data: data) {
                 picked = image
             }
-            try? fm.removeItem(at: url)
+            do {
+                try fm.removeItem(at: url)
+            } catch {
+                Log.share.error("Failed to remove shared file: \(error.localizedDescription, privacy: .private)")
+            }
         }
 
         if let image = picked {
