@@ -43,14 +43,20 @@ targets:
         product: GoogleSignInSwift
       - package: MSAL
         product: MSAL
+    configFiles:
+      Debug: Configs/Debug.xcconfig
+      Release: Configs/Release.xcconfig
     entitlements:
       path: Planote/Planote.entitlements
       properties:
         com.apple.security.application-groups:
           - group.com.planote.app
+        com.apple.developer.applesignin:
+          - Default
     info:
       path: Planote/Info.plist
       properties:
+        PLANOTE_BASE_URL: $(PLANOTE_BASE_URL)
         CFBundleDisplayName: Scanote AI
         CFBundleShortVersionString: $(MARKETING_VERSION)
         CFBundleVersion: $(CURRENT_PROJECT_VERSION)

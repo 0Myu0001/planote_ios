@@ -1,12 +1,15 @@
 import SwiftUI
 import GoogleSignIn
+import AuthenticationServices
 
 struct SettingsView: View {
     let onBack: () -> Void
 
     @ObservedObject private var settings = AppSettings.shared
+    @ObservedObject private var auth = AuthService.shared
     @State private var googleEmail: String? = GoogleCalendarService.shared.currentUserEmail
     @State private var microsoftEmail: String? = MicrosoftCalendarService.shared.currentUserEmail
+    @State private var isSigningInApple = false
     @State private var isSigningIn = false
     @State private var isSigningInMicrosoft = false
     @State private var errorMessage: String?
@@ -21,6 +24,7 @@ struct SettingsView: View {
 
                 ScrollView(.vertical, showsIndicators: false) {
                     VStack(spacing: 20) {
+                        appleAccountSection
                         defaultCalendarSection
                         googleAccountSection
                         microsoftAccountSection
@@ -58,6 +62,86 @@ struct SettingsView: View {
     private func refreshAccounts() {
         googleEmail = GoogleCalendarService.shared.currentUserEmail
         microsoftEmail = MicrosoftCalendarService.shared.currentUserEmail
+    }
+
+    // MARK: - Apple ID Account (App-level Sign-In)
+
+    private var appleAccountSection: some View {
+        VStack(alignment: .leading, spacing: 10) {
+            SectionHeader(title: "Apple ID", trailing: nil)
+
+            VStack(spacing: 12) {
+                HStack(spacing: 12) {
+                    Image(systemName: "applelogo")
+                        .font(.system(size: 22))
+                        .foregroundStyle(Color.textPrimary)
+                        .frame(width: 28)
+
+                    VStack(alignment: .leading, spacing: 2) {
+                        if auth.isSignedIn {
+                            Text("サインイン中")
+                                .font(.system(size: 11, weight: .medium))
+                                .foregroundStyle(Color.textTertiary)
+                            Text(auth.userId ?? "")
+                                .font(.system(size: 13, weight: .semibold))
+                                .foregroundStyle(Color.textPrimary)
+                                .lineLimit(1)
+                                .truncationMode(.middle)
+                        } else {
+                            Text("未サインイン")
+                                .font(.system(size: 14, weight: .semibold))
+                                .foregroundStyle(Color.textSecondary)
+                            Text("Scanote AI を使うには Apple ID でサインインしてください")
+                                .font(.system(size: 11))
+                                .foregroundStyle(Color.textTertiary)
+                                .fixedSize(horizontal: false, vertical: true)
+                        }
+                    }
+
+                    Spacer()
+                }
+
+                if !auth.isSignedIn {
+                    SignInWithAppleButton(.signIn) { _ in
+                        // request 設定は AuthService 内で完結させるため何もしない
+                    } onCompletion: { _ in
+                        // ボタンの組み込み完了ハンドラは使わず、AuthService 経由で実行
+                    }
+                    .frame(maxWidth: .infinity)
+                    .frame(height: 48)
+                    .signInWithAppleButtonStyle(.black)
+                    .clipShape(Capsule())
+                    .opacity(isSigningInApple ? 0.5 : 1.0)
+                    .overlay {
+                        // ボタン外観のみ流用し、タップは独自ハンドラで処理
+                        Capsule()
+                            .fill(Color.clear)
+                            .contentShape(Capsule())
+                            .onTapGesture {
+                                signInApple()
+                            }
+                    }
+                    .disabled(isSigningInApple)
+                } else {
+                    Button(action: { auth.signOut() }) {
+                        Text("サインアウト")
+                            .font(.system(size: 14, weight: .semibold))
+                            .foregroundStyle(Color(hex: 0xFF3B30))
+                            .frame(maxWidth: .infinity)
+                            .padding(.vertical, 12)
+                            .background {
+                                Capsule()
+                                    .fill(.ultraThinMaterial)
+                                    .overlay(Capsule().fill(Color.glassBg))
+                                    .overlay(Capsule().stroke(Color.glassBorder, lineWidth: 1))
+                            }
+                    }
+                    .buttonStyle(.plain)
+                }
+            }
+            .padding(14)
+            .glassBackground()
+        }
     }
 
     // MARK: - Default Calendar
@@ -356,6 +440,26 @@ struct SettingsView: View {
     private func signOutMicrosoft() {
         MicrosoftCalendarService.shared.signOut()
         microsoftEmail = nil
+    }
+
+    private func signInApple() {
+        guard !isSigningInApple else { return }
+        isSigningInApple = true
+        Task {
+            do {
+                try await auth.signIn()
+                await MainActor.run { isSigningInApple = false }
+            } catch AuthError.cancelled {
+                await MainActor.run { isSigningInApple = false }
+            } catch {
+                await MainActor.run {
+                    isSigningInApple = false
+                    errorMessage = error.localizedDescription
+                }
+                try? await Task.sleep(nanoseconds: 3_000_000_000)
+                await MainActor.run { errorMessage = nil }
+            }
+        }
     }
 }
 
