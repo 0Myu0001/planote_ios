@@ -340,7 +340,9 @@ struct ReviewView: View {
         }
     }
 
-    private func addToAppleCalendar(selectedCandidates: [ExtractionCandidate], selectedIds: [String]) {
+    private func addToAppleCalendar(selectedCandidates rawCandidates: [ExtractionCandidate], selectedIds: [String]) {
+        // サーバー応答をクライアント側でもサニタイズ
+        let selectedCandidates = rawCandidates.map { CandidateSanitizer.sanitize($0) }
         isAdding = true
         Task {
             let granted = await CalendarService.shared.requestAccess()
@@ -375,7 +377,7 @@ struct ReviewView: View {
                     candidateIds: selectedIds
                 )
             } catch {
-                print("Confirm error: \(error.localizedDescription)")
+                Log.api.error("Confirm error: \(error.localizedDescription, privacy: .private)")
             }
 
             try? await Task.sleep(nanoseconds: 1_500_000_000)
@@ -386,7 +388,8 @@ struct ReviewView: View {
         }
     }
 
-    private func addToGoogleCalendar(selectedCandidates: [ExtractionCandidate], selectedIds: [String]) {
+    private func addToGoogleCalendar(selectedCandidates rawCandidates: [ExtractionCandidate], selectedIds: [String]) {
+        let selectedCandidates = rawCandidates.map { CandidateSanitizer.sanitize($0) }
         isAdding = true
         Task {
             // 認証 + Calendar スコープ取得
@@ -437,7 +440,7 @@ struct ReviewView: View {
                     candidateIds: selectedIds
                 )
             } catch {
-                print("Confirm error: \(error.localizedDescription)")
+                Log.api.error("Confirm error: \(error.localizedDescription, privacy: .private)")
             }
 
             try? await Task.sleep(nanoseconds: 1_500_000_000)
@@ -449,7 +452,8 @@ struct ReviewView: View {
         }
     }
 
-    private func addToOutlook(selectedCandidates: [ExtractionCandidate], selectedIds: [String]) {
+    private func addToOutlook(selectedCandidates rawCandidates: [ExtractionCandidate], selectedIds: [String]) {
+        let selectedCandidates = rawCandidates.map { CandidateSanitizer.sanitize($0) }
         isAdding = true
         Task {
             // 認証 + スコープ取得
@@ -498,7 +502,7 @@ struct ReviewView: View {
                     candidateIds: selectedIds
                 )
             } catch {
-                print("Confirm error: \(error.localizedDescription)")
+                Log.api.error("Confirm error: \(error.localizedDescription, privacy: .private)")
             }
 
             try? await Task.sleep(nanoseconds: 1_500_000_000)
