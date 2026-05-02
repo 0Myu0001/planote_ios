@@ -144,20 +144,25 @@ actor PlanoteAPIClient {
         return path.hasPrefix("/v1/auth/") || path.hasPrefix("/v1/attest/")
     }
 
-    /// 共通ヘッダ (認証 + App Attest) を付与する。
+    /// 共通ヘッダ (認証 + App Attest) を best-effort で付与する。
+    /// サインイン未完了 / App Attest setup 失敗時はヘッダを付けずに進める。
+    /// サーバー側で必須化されている場合は 401/403 で返ってくるので、
+    /// その応答を `validateResponse` 経由で `serverError` として扱う。
     /// - Parameter skipAuth: bootstrap 系パスでは true を渡す。
-    private func attachCommonHeaders(_ request: inout URLRequest, skipAuth: Bool) async throws {
+    private func attachCommonHeaders(_ request: inout URLRequest, skipAuth: Bool) async {
         if skipAuth { return }
 
-        // 1. Authorization
-        let token = try await AuthService.shared.currentAccessToken()
-        request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
+        // 1. Authorization (サインイン済みなら付与)
+        if let token = try? await AuthService.shared.currentAccessToken() {
+            request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
+        }
 
-        // 2. App Attest assertion (リクエストボディに対する)
+        // 2. App Attest assertion (setup 完了 & 取得成功時のみ付与)
         let bodyForAssertion = request.httpBody ?? Data()
-        let (keyId, assertion) = try await AppAttestService.shared.assertion(for: bodyForAssertion)
-        request.setValue(keyId, forHTTPHeaderField: "X-AppAttest-KeyID")
-        request.setValue(assertion.base64EncodedString(), forHTTPHeaderField: "X-AppAttest-Assertion")
+        if let result = try? await AppAttestService.shared.assertion(for: bodyForAssertion) {
+            request.setValue(result.keyId, forHTTPHeaderField: "X-AppAttest-KeyID")
+            request.setValue(result.assertion.base64EncodedString(), forHTTPHeaderField: "X-AppAttest-Assertion")
+        }
     }
 
     private func get<T: Decodable>(path: String) async throws -> T {
@@ -168,7 +173,7 @@ actor PlanoteAPIClient {
         var request = URLRequest(url: url)
         request.httpMethod = "GET"
         request.setValue("application/json", forHTTPHeaderField: "Accept")
-        try await attachCommonHeaders(&request, skipAuth: shouldSkipAuth(for: path))
+        await attachCommonHeaders(&request, skipAuth: shouldSkipAuth(for: path))
 
         let (data, response) = try await session.data(for: request)
         try validateResponse(response, data: data, expectedStatus: nil)
@@ -191,7 +196,7 @@ actor PlanoteAPIClient {
         if let idempotencyKey {
             request.setValue(idempotencyKey, forHTTPHeaderField: "Idempotency-Key")
         }
-        try await attachCommonHeaders(&request, skipAuth: shouldSkipAuth(for: path))
+        await attachCommonHeaders(&request, skipAuth: shouldSkipAuth(for: path))
 
         let (data, response) = try await session.data(for: request)
         try validateResponse(response, data: data, expectedStatus: expectedStatus)
@@ -216,7 +221,7 @@ actor PlanoteAPIClient {
         if let idempotencyKey {
             request.setValue(idempotencyKey, forHTTPHeaderField: "Idempotency-Key")
         }
-        try await attachCommonHeaders(&request, skipAuth: shouldSkipAuth(for: path))
+        await attachCommonHeaders(&request, skipAuth: shouldSkipAuth(for: path))
 
         let (data, response) = try await session.data(for: request)
         try validateResponse(response, data: data, expectedStatus: expectedStatus)

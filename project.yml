@@ -51,8 +51,6 @@ targets:
       properties:
         com.apple.security.application-groups:
           - group.com.planote.app
-        com.apple.developer.applesignin:
-          - Default
     info:
       path: Planote/Info.plist
       properties:
