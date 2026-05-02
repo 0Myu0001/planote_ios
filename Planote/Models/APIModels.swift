@@ -18,7 +18,6 @@ struct CreateUploadResponse: Decodable {
 
 struct NoteCreateRequest: Encodable {
     let upload_id: String
-    let object_path: String
 }
 
 struct NoteCreateResponse: Decodable {
