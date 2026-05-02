@@ -51,7 +51,7 @@ enum CandidateSanitizer {
     /// 制御文字を除去 (`\n` `\r` `\t` のみ許可)、両端 trim、空なら nil、最大長で truncate。
     private static func clean(_ input: String?, max: Int) -> String? {
         guard let input else { return nil }
-        let allowed: Set<Unicode.Scalar.Value> = [0x0A, 0x0D, 0x09]  // LF, CR, TAB
+        let allowed: Set<UInt32> = [0x0A, 0x0D, 0x09]  // LF, CR, TAB
         let filteredScalars = input.unicodeScalars.filter { scalar in
             if allowed.contains(scalar.value) { return true }
             return !CharacterSet.controlCharacters.contains(scalar)
