@@ -6,6 +6,8 @@
 	<string>ja</string>
 	<key>CFBundleDisplayName</key>
 	<string>Scanote AI</string>
+	<key>PLANOTE_BASE_URL</key>
+	<string>$(PLANOTE_BASE_URL)</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>

@@ -1,0 +1,3 @@
+// Debug 構成
+// xcconfig では `//` がコメント扱いになるため URL のスラッシュを `/$()/` でエスケープ
+PLANOTE_BASE_URL = https:/$()/planote-api-staging-709346610161.asia-northeast1.run.app

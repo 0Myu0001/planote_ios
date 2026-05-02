@@ -21,7 +21,7 @@ actor CalendarService {
         event.location = candidate.location
         event.calendar = store.defaultCalendarForNewEvents
 
-        let tz = TimeZone(identifier: candidate.timezone ?? "Asia/Tokyo") ?? TimeZone(identifier: "Asia/Tokyo")!
+        let tz = TimeZone(identifier: candidate.timezone ?? "Asia/Tokyo") ?? TimeZone(identifier: "Asia/Tokyo") ?? TimeZone.current
 
         let dateFmt = DateFormatter()
         dateFmt.locale = Locale(identifier: "en_US_POSIX")
@@ -58,7 +58,7 @@ actor CalendarService {
             try store.save(event, span: .thisEvent)
             return event.startDate
         } catch {
-            print("CalendarService save error: \(error.localizedDescription)")
+            Log.calendar.error("EventKit save error: \(error.localizedDescription, privacy: .private)")
             return nil
         }
     }
